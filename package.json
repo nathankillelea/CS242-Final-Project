@@ -1,0 +1,22 @@
+{
+  "name": "CS242-Final-Project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require babel-register"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.0.0-beta.44",
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "mocha": "^5.0.5"
+  },
+  "dependencies": {
+    "jsdom": "^11.7.0"
+  }
+}
