@@ -1,0 +1,4 @@
+1. Create three basic enemy types
+2. Make the enemies move towards the player
+3. Implement basic collision detection
+4. Add destructible environment objects that can block player/enemy movement

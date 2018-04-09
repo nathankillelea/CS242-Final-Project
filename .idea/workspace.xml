@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ceaf7fdd-d083-429a-89f9-154b580e9e66" name="Default" comment="" />
+    <list default="true" id="ceaf7fdd-d083-429a-89f9-154b580e9e66" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/EnvironmentObjects/Bush.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enemies/Enemy.js" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/Enemy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enemies/LightEnemy.js" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/LightEnemy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enemies/RegularEnemy.js" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/RegularEnemy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enemies/TankEnemy.js" beforeDir="false" afterPath="$PROJECT_DIR$/Enemies/TankEnemy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EnvironmentObjects/Building.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EnvironmentObjects/Tree.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/LightEnemy.png" beforeDir="false" afterPath="$PROJECT_DIR$/Graphics/LightEnemy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/RegularEnemy.png" beforeDir="false" afterPath="$PROJECT_DIR$/Graphics/RegularEnemy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphics/TankEnemy.png" beforeDir="false" afterPath="$PROJECT_DIR$/Graphics/TankEnemy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/babel-core/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/babel-core/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/jsdom/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/jsdom/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/left-pad/.npmignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/left-pad/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/left-pad/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/left-pad/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/left-pad/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/left-pad/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/left-pad/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/left-pad/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/left-pad/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.js" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -17,19 +39,76 @@
       <file leaf-file-name="Enemy.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Enemies/Enemy.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
+            <state relative-caret-position="525">
+              <caret line="124" column="5" lean-forward="true" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/test.js">
+      <file leaf-file-name="LightEnemy.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Enemies/LightEnemy.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bush.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Bush.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="84">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+              <caret line="4" column="26" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Crate.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Crate.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="4" column="31" lean-forward="true" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Rock.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Rock.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EnvironmentObject.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EnvironmentObjects/EnvironmentObject.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Game.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Game.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="84">
+              <caret line="4" column="33" lean-forward="true" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="798">
+              <caret line="122" column="5" lean-forward="true" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
               <folding>
-                <element signature="e#0#54#0" expanded="true" />
+                <element signature="e#73#114#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -41,31 +120,78 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package_json" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
+    <findStrings>
+      <find>constructor</find>
+      <find>var</find>
+      <find>function</find>
+      <find>modifier</find>
+      <find>update</find>
+      <find>keysDown</find>
+      <find>keyUp</find>
+      <find>keydown</find>
+      <find>keyup</find>
+      <find>speed</find>
+      <find>player</find>
+      <find>bgImage</find>
+      <find>load</find>
+      <find>hero.x</find>
+      <find>heroReady</find>
+      <find>heroImage</find>
+      <find>rectangle1</find>
+      <find>rectangle2</find>
+      <find>Tree</find>
+      <find>util</find>
+      <find>hero</find>
+      <find>tree</find>
+      <find>move</find>
+    </findStrings>
     <replaceStrings>
       <replace />
+      <replace>let</replace>
+      <replace>keysPressed</replace>
+      <replace>player</replace>
     </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Enemy.js" />
-        <option value="$PROJECT_DIR$/EnvironmentObjects/Tree.js" />
         <option value="$PROJECT_DIR$/EnvironmentObjects/House.js" />
         <option value="$PROJECT_DIR$/EnvironmentObjects/Building.js" />
-        <option value="$PROJECT_DIR$/Enemies/Enemy.js" />
         <option value="$PROJECT_DIR$/Tests/test.js" />
         <option value="$PROJECT_DIR$/.babelrc" />
-        <option value="$PROJECT_DIR$/Enemies/LightEnemy.js" />
-        <option value="$PROJECT_DIR$/Enemies/RegularEnemy.js" />
-        <option value="$PROJECT_DIR$/Enemies/TankEnemy.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/test/test-html.html" />
+        <option value="$PROJECT_DIR$/Bullet.js" />
+        <option value="$PROJECT_DIR$/Weapon.js" />
+        <option value="$PROJECT_DIR$/Weapons/Pistol.js" />
+        <option value="$PROJECT_DIR$/Weapons/Weapon.js" />
+        <option value="$PROJECT_DIR$/main.js" />
+        <option value="$PROJECT_DIR$/Game.html" />
+        <option value="$PROJECT_DIR$/gulpfile.js" />
+        <option value="$PROJECT_DIR$/Enemies/TankEnemy.js" />
+        <option value="$PROJECT_DIR$/Enemies/LightEnemy.js" />
+        <option value="$PROJECT_DIR$/Enemies/RegularEnemy.js" />
+        <option value="$PROJECT_DIR$/Players/Player.js" />
+        <option value="$PROJECT_DIR$/Utilities/Util.js" />
+        <option value="$PROJECT_DIR$/EnvironmentObjects/Tree.js" />
+        <option value="$PROJECT_DIR$/EnvironmentObjects/EnvironmentObject.js" />
+        <option value="$PROJECT_DIR$/Week1_features.txt" />
+        <option value="$PROJECT_DIR$/EnvironmentObjects/Crate.js" />
+        <option value="$PROJECT_DIR$/EnvironmentObjects/Bush.js" />
+        <option value="$PROJECT_DIR$/EnvironmentObjects/Rock.js" />
+        <option value="$PROJECT_DIR$/Main.js" />
+        <option value="$PROJECT_DIR$/Nathan_Week1_Features.txt" />
+        <option value="$PROJECT_DIR$/Enemies/Enemy.js" />
         <option value="$PROJECT_DIR$/test/test.js" />
       </list>
     </option>
@@ -79,9 +205,9 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="530" />
-    <option name="y" value="88" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="622" />
+    <option name="y" value="120" />
     <option name="width" value="1011" />
     <option name="height" value="848" />
   </component>
@@ -115,7 +241,17 @@
             <path>
               <item name="CS242-Final-Project" type="b2602c69:ProjectViewProjectNode" />
               <item name="CS242-Final-Project" type="462c0819:PsiDirectoryNode" />
+              <item name="Players" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CS242-Final-Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CS242-Final-Project" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CS242-Final-Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CS242-Final-Project" type="462c0819:PsiDirectoryNode" />
+              <item name="Utilities" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -138,6 +274,8 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Nathan\WebstormProjects\CS242-Final-Project\Graphics" />
+      <recent name="C:\Users\Nathan\WebstormProjects\CS242-Final-Project\Players" />
+      <recent name="C:\Users\Nathan\WebstormProjects\CS242-Final-Project\Weapons" />
       <recent name="C:\Users\Nathan\WebstormProjects\CS242-Final-Project\Enemies" />
     </key>
   </component>
@@ -199,6 +337,7 @@
       <workItem from="1523059894980" duration="4745000" />
       <workItem from="1523135046895" duration="11477000" />
       <workItem from="1523157792618" duration="1250000" />
+      <workItem from="1523222927330" duration="41905000" />
     </task>
     <servers />
   </component>
@@ -224,18 +363,23 @@
     <history-entry file="test_test_js - 2018.04.07 at 18h 01m 09s.xml">
       <configuration name="test\test.js" configurationId="mocha-javascript-test-runner" />
     </history-entry>
+    <history-entry file="test_test_js - 2018.04.08 at 17h 52m 44s.xml">
+      <configuration name="test\test.js" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24784000" />
+    <option name="totallyTimeSpent" value="66689000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="530" y="88" width="1011" height="848" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.48241207" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32946146" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32946146" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
@@ -247,7 +391,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32946146" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,6 +400,23 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Enemies/Enemy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Enemies/Enemy.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
@@ -278,7 +438,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Tree.js">
+    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Bush.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
@@ -337,59 +497,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Tree.js">
+    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Bush.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="6" column="17" lean-forward="true" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.babelrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enemies/LightEnemy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="21" selection-start-column="21" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enemies/RegularEnemy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="21" selection-start-column="21" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enemies/TankEnemy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="25" lean-forward="true" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enemies/Enemy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Building.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -400,12 +511,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Tree.js">
+    <entry file="file://$PROJECT_DIR$/Weapons/Bullet.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        <state relative-caret-position="630">
+          <caret line="30" column="3" lean-forward="true" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weapons/Pistol.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weapons/Weapon.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="53" lean-forward="true" selection-start-line="1" selection-start-column="53" selection-end-line="1" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.babelrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="24" column="34" lean-forward="true" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Graphics/Background.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Building.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Graphics/TankEnemy.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Graphics/Player.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Graphics/LightEnemy.png">
       <provider selected="true" editor-type-id="images" />
@@ -413,15 +568,125 @@
     <entry file="file://$PROJECT_DIR$/Graphics/RegularEnemy.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Graphics/TankEnemy.png">
+    <entry file="file://$PROJECT_DIR$/Enemies/TankEnemy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" column="23" lean-forward="true" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Utilities/Util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="14" column="46" lean-forward="true" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enemies/RegularEnemy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="51" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Graphics/Bush.png">
       <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Graphics/Crate.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Players/Player.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="15" column="44" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Nathan_Week1_Features.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="38" lean-forward="true" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="560">
+          <caret line="102" column="6" lean-forward="true" selection-start-line="102" selection-start-column="6" selection-end-line="102" selection-end-column="6" />
           <folding>
-            <element signature="e#0#54#0" expanded="true" />
+            <element signature="e#121#175#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enemies/Enemy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="124" column="5" lean-forward="true" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enemies/LightEnemy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Bush.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="26" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Crate.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="31" lean-forward="true" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/Rock.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EnvironmentObjects/EnvironmentObject.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Bundle.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Game.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="33" lean-forward="true" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="798">
+          <caret line="122" column="5" lean-forward="true" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
+          <folding>
+            <element signature="e#73#114#0" expanded="true" />
           </folding>
         </state>
       </provider>
