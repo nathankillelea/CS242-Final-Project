@@ -17,6 +17,12 @@ class Player {
         };
         this.image.src = "Graphics/Player.png";
     }
+    shoot() {
+      this.shootCooldown+=10;
+    }
+    draw(ctx) {
+        ctx.drawImage(this.image, this.x, this.y);
+    }
 }
 
 export default Player;
