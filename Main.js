@@ -6,6 +6,8 @@ import TankEnemy from './Enemies/TankEnemy.js';
 import Crate from './EnvironmentObjects/Crate.js';
 import Bush from './EnvironmentObjects/Bush.js';
 import Rock from './EnvironmentObjects/Rock.js';
+import Bullet from './Weapons/Bullet.js';
+import Bullet9mm from './Weapons/Bullet9mm.js'
 import Util from './Utilities/Util.js';
 
 // Create the canvas
@@ -27,6 +29,7 @@ bgImage.src = "Graphics/Background.png";
 let hero = new Player();
 let enemies = [];
 let environmentObjects = [];
+let bullets = [];
 enemies.push(new LightEnemy(500, 0));
 enemies.push(new RegularEnemy(300, 0));
 enemies.push(new TankEnemy(450, 0));
@@ -34,8 +37,10 @@ environmentObjects.push(new Crate(200, 400));
 environmentObjects.push(new Bush(20, 100));
 environmentObjects.push(new Rock(900, 20));
 
-// Handle keyboard controls
+// Handle controls
 let keysPressed = {};
+let mouse = [0,0];
+let clicking = false;
 
 addEventListener("keydown", (e) => {
 	keysPressed[e.keyCode] = true;
@@ -44,6 +49,16 @@ addEventListener("keydown", (e) => {
 addEventListener("keyup", (e) => {
 	delete keysPressed[e.keyCode];
 }, false);
+
+addEventListener('mousemove', (e) => {
+	mouse[0] = e.clientX;
+	mouse[1] = e.clientY;
+}, false);
+
+addEventListener('mousedown', (e) => {
+	clicking = true;
+	bullets.push(new Bullet9mm(hero.x+hero.width/2, hero.y, e.clientX, e.clientY));
+})
 
 
 let reset = () => {
@@ -59,7 +74,6 @@ let isCollisionWithEnvironmentObject = () => {
     }
     return false;
 };
-
 // Update game objects
 let update = (modifier) => {
 	if (87 in keysPressed) { // Player holding up
@@ -89,15 +103,22 @@ let update = (modifier) => {
 
 	for(let i = 0; i < enemies.length; i++) {
 		enemies[i].move(hero, modifier, environmentObjects);
+		if(enemies[i].health <= 0) {
+			enemies.splice(i, 1);
+		}
 		if(enemies[i].attackCooldown > 0) {
 			enemies[i].attackCooldown -= 5;
 		}
+	}
+	for(let i = 0; i < bullets.length; i++) {
+		bullets[i].move(modifier, environmentObjects, enemies);
 	}
 	for(let i = 0; i < environmentObjects.length; i++) {
 		if(environmentObjects[i].health <= 0) {
 			environmentObjects.splice(i, 1);
 		}
 	}
+
 };
 
 // Draw everything
@@ -107,20 +128,32 @@ let render = () => {
 	}
 
 	if(hero.isImageLoaded) {
-		ctx.drawImage(hero.image, hero.x, hero.y);
+	  hero.draw(ctx);
 	}
 
     for(let i = 0; i < enemies.length; i++) {
-        if(enemies[i].isImageLoaded) {
-			enemies[i].draw(ctx);
-		}
+    	if(enemies[i].isImageLoaded) {
+				enemies[i].draw(ctx);
+			}
     }
 
     for(let i = 0; i < environmentObjects.length; i++) {
-		if(environmentObjects[i].isImageLoaded) {
-			environmentObjects[i].draw(ctx);
+			if(environmentObjects[i].isImageLoaded) {
+				environmentObjects[i].draw(ctx);
+			}
 		}
-	}
+		//Remove bullets that aren't live
+		for(let i = 0; i < bullets.length; i++) {
+			if(bullets[i].live == false){
+				bullets.splice(i, 1);
+			}
+		}
+		//Render all the bullets at their locations and remove bullets that aren't live
+		for(let i = 0; i < bullets.length; i++) {
+			if(bullets[i].isImageLoaded && bullets[i].live) {
+				bullets[i].draw(ctx);
+			}
+		}
 };
 
 // The main game loop

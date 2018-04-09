@@ -11,6 +11,8 @@ import Util from '../Utilities/Util.js';
 import Crate from '../EnvironmentObjects/Crate.js';
 import Bush from '../EnvironmentObjects/Bush.js';
 import Rock from '../EnvironmentObjects/Rock.js';
+import Bullet from '../Weapons/Bullet.js';
+import Bullet9mm from '../Weapons/Bullet9mm.js';
 
 let assert = require('assert');
 
@@ -79,8 +81,8 @@ describe('Environment Objects', () => {
     let rock = new Rock(7500, 7500);
     describe('Crate', () => {
         describe('Creation', () => {
-            it('should have 500 health and be blocking', () => {
-                assert.equal(crate.health, 500);
+            it('should have 100 health and be blocking', () => {
+                assert.equal(crate.health, 100);
                 assert.equal(crate.isBlocking, true);
             })
         })
@@ -95,8 +97,8 @@ describe('Environment Objects', () => {
     });
     describe('Rock', () => {
         describe('Creation', () => {
-            it('should have 3000 health and be blocking', () => {
-                assert.equal(rock.health, 3000);
+            it('should have 300 health and be blocking', () => {
+                assert.equal(rock.health, 300);
                 assert.equal(rock.isBlocking, true);
             })
         })

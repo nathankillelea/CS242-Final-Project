@@ -1,0 +1,4 @@
+1. Created player object
+2. Created bullet type (and weapon type which is currently unused)
+3. Implemented basic game loop
+4. Implemented the ability to shoot to destroy environment objects and enemies
