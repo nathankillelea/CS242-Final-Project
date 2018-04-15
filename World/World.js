@@ -6,6 +6,7 @@ import RegularEnemy from "../Enemies/RegularEnemy";
 import LightEnemy from "../Enemies/LightEnemy";
 import Player from "../Players/Player";
 import Camera from "../Players/Camera";
+import Util from "../Utilities/Util";
 
 /**
  * The World class holds the information related to the world.
@@ -53,9 +54,26 @@ class World {
      * This function starts the wave by pushing enemies onto the enemies array.
      */
     startWave() {
-        this.enemies.push(new LightEnemy(500, 0));
-        this.enemies.push(new RegularEnemy(300, 0));
-        this.enemies.push(new TankEnemy(450, 0));
+        let lightEnemyCap = this.wave * 5;
+        let regularEnemyCap = Math.floor(this.wave/2 * 5);
+        let tankEnemyCap = Math.floor(this.wave * 1.5);
+
+        for(let i = 0; i < lightEnemyCap; i++)
+            this.enemies.push(new LightEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < regularEnemyCap; i++)
+            this.enemies.push(new RegularEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < tankEnemyCap; i++)
+            this.enemies.push(new TankEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        // include the other types as well, maybe if wave == something or > something
+
+        let collisionFlag = true;
+        while(collisionFlag === true) {
+            let i = Util.areAnyCollisions(this.enemies, this.environmentObjects);
+            if (i === -1)
+                collisionFlag = false;
+            else
+                this.enemies[i].setPosition(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375));
+        }
     }
 
     /**

@@ -53,28 +53,30 @@ let isCollisionWithEnvironmentObject = () => {
 
 // Update game objects
 let update = (modifier) => {
-	if (87 in keysPressed) { // Player holding up
-		world.player.y -= world.player.speed * modifier;
-		if(isCollisionWithEnvironmentObject()) {
-            world.player.y += world.player.speed * modifier;
-        }
-	}
-	if (83 in keysPressed) { // Player holding down
-		world.player.y += world.player.speed * modifier;
-        if(isCollisionWithEnvironmentObject()) {
+	if(world.player.health > 0) {
+        if (87 in keysPressed) { // Player holding up
             world.player.y -= world.player.speed * modifier;
+            if(isCollisionWithEnvironmentObject()) {
+                world.player.y += world.player.speed * modifier;
+            }
         }
-	}
-	if (65 in keysPressed) { // Player holding left
-		world.player.x -= world.player.speed * modifier;
-        if(isCollisionWithEnvironmentObject()) {
-            world.player.x += world.player.speed * modifier;
+        if (83 in keysPressed) { // Player holding down
+            world.player.y += world.player.speed * modifier;
+            if(isCollisionWithEnvironmentObject()) {
+                world.player.y -= world.player.speed * modifier;
+            }
         }
-	}
-	if (68 in keysPressed) { // Player holding right
-		world.player.x += world.player.speed * modifier;
-        if(isCollisionWithEnvironmentObject()) {
+        if (65 in keysPressed) { // Player holding left
             world.player.x -= world.player.speed * modifier;
+            if(isCollisionWithEnvironmentObject()) {
+                world.player.x += world.player.speed * modifier;
+            }
+        }
+        if (68 in keysPressed) { // Player holding right
+            world.player.x += world.player.speed * modifier;
+            if(isCollisionWithEnvironmentObject()) {
+                world.player.x -= world.player.speed * modifier;
+            }
         }
 	}
 
@@ -98,29 +100,43 @@ let update = (modifier) => {
 			world.environmentObjects.splice(i, 1);
 		}
 	}
-	console.log(world.enemies)
+
+	if(world.enemies.length === 0) {
+		world.wave += 1;
+		world.startWave();
+	}
+
 };
 
 // Draw everything
 let render = () => {
-	if(world.isBackgroundLoaded) {
-		world.drawBackground(ctx, canvas);
+	if(world.player.health < 0){
+        ctx.font = "128px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("Game Over", canvas.width/2, canvas.height/2);
 	}
+	else {
+        if(world.isBackgroundLoaded) {
+            world.drawBackground(ctx, canvas);
+        }
 
-	if(world.player.isImageLoaded) {
-	  world.player.draw(ctx, world.camera);
-	}
+        if(world.player.isImageLoaded) {
+            world.player.draw(ctx, world.camera);
+            ctx.font = "48px sans-serif";
+            ctx.fillText(world.player.health + " HP", 10, 50);
+        }
 
-    for(let i = 0; i < world.enemies.length; i++) {
-    	if(world.enemies[i].isImageLoaded) {
-			world.enemies[i].draw(ctx, world.camera);
-		}
-    }
+        for(let i = 0; i < world.enemies.length; i++) {
+            if(world.enemies[i].isImageLoaded) {
+                world.enemies[i].draw(ctx, world.camera);
+            }
+        }
 
-    for(let i = 0; i < world.environmentObjects.length; i++) {
-		if(world.environmentObjects[i].isImageLoaded) {
-			world.environmentObjects[i].draw(ctx, world.camera);
-		}
+        for(let i = 0; i < world.environmentObjects.length; i++) {
+            if(world.environmentObjects[i].isImageLoaded) {
+                world.environmentObjects[i].draw(ctx, world.camera);
+            }
+        }
 	}
 
 	//Render all the world.bullets at their locations and remove world.bullets that aren't live

@@ -1,7 +1,8 @@
-/**
- * Sources:
- * https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
- */
+/*
+  Sources:
+  https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+  https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+*/
 
 /**
  * The Util class contains various utility functions.
@@ -27,8 +28,29 @@ class Util {
         }
     }
 
+    /**
+     * This function checks if there are any collisions between the two arrays. This algorithm only works with
+     * axis-aligned rectangles.
+     * @param array1 An array of rectangles.
+     * @param array2 An array of rectangles.
+     * @returns {integer} -1 if there are no collisions or the index of the first array if there is.
+     */
+    static areAnyCollisions(array1, array2) {
+        for(let i = 0; i < array1.length; i++) {
+            for(let j = 0; j < array2.length; j++) {
+                if(this.isCollision(array1[i], array2[j]))
+                    return i;
+            }
+        }
+        return -1;
+    }
+
     static isWithin(x1, y1, width1, height1, x2, y2, width2, height2) {
 
+    }
+
+    static randomIntFromInterval(from, to) {
+        return Math.floor(Math.random() * (to - from + 1) + from)
     }
 }
 

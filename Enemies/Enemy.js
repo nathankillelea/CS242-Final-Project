@@ -107,6 +107,16 @@ class Enemy {
     }
 
     /**
+     * This function sets the position of the enemy given x and y.
+     * @param x The x position to be set.
+     * @param y The y position to be set.
+     */
+    setPosition(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
      * This function is a helper function used by the move function to determine if there is a collision between an
      * environment object and the enemy. If there is a collision, the object is attacked.
      * @param environmentObjects An array of environment objects.
