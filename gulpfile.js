@@ -27,7 +27,7 @@ gulp.task('es6', function() {
 });
 
 gulp.task('watch',function() {
-    gulp.watch(['./app/**/*.js'],['es6'])
+    gulp.watch(['./app/**/*.js'],['es6']) // does this work idk
 });
 
 gulp.task('default', ['es6','watch']);

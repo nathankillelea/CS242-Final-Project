@@ -99,8 +99,8 @@ class Bullet{
 
       return false;
   }
-  draw(ctx) {
-      ctx.drawImage(this.image, this.x, this.y);
+  draw(ctx, camera) {
+      ctx.drawImage(this.image, this.x - camera.x, this.y - camera.y);
   }
 }
 

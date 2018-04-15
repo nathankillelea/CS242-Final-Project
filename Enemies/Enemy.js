@@ -128,12 +128,12 @@ class Enemy {
      * The draw function draws the image on the canvas at the x and y position of the LightEnemy.
      * @param ctx The context of the canvas.
      */
-    draw(ctx) {
+    draw(ctx, camera) {
         //ctx.save();
         //ctx.translate(this.x, this.y);
         //ctx.rotate(this.angle + Math.PI/2.0);
         //ctx.translate(-this.x, -this.y);
-        ctx.drawImage(this.image, this.x, this.y);
+        ctx.drawImage(this.image, this.x - camera.x, this.y - camera.y);
         //ctx.restore();
     }
 }

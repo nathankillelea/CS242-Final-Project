@@ -18,10 +18,10 @@ class Player {
         this.image.src = "Graphics/Player.png";
     }
     shoot() {
-      this.shootCooldown+=10;
+      this.shootCooldown += 10;
     }
-    draw(ctx) {
-        ctx.drawImage(this.image, this.x, this.y);
+    draw(ctx, camera) {
+        ctx.drawImage(this.image, this.x - camera.x, this.y - camera.y);
     }
 }
 

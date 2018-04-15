@@ -1,0 +1,9 @@
+1. Wave System (Set # of enemies spawn per wave. Wave ends when all enemies are defeated. Waves become increasingly more difficult)
+2. World larger than the screen
+3. Implement Model-View-Controller design?? eh
+4. Implement 2 unique enemies (One that shoots projectiles at the player, one that does something else such as boss)
+5. Maybe improved hit detection
+6. Pause and restart
+7. Create world object??
+
+need to add COMMENTS to my STUFF

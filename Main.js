@@ -1,41 +1,23 @@
-//http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/
-import Player from './Players/Player.js';
-import LightEnemy from './Enemies/LightEnemy.js';
-import RegularEnemy from './Enemies/RegularEnemy.js';
-import TankEnemy from './Enemies/TankEnemy.js';
-import Crate from './EnvironmentObjects/Crate.js';
-import Bush from './EnvironmentObjects/Bush.js';
-import Rock from './EnvironmentObjects/Rock.js';
-import Bullet from './Weapons/Bullet.js';
+/*
+  Sources:
+  http://www.lostdecadegames.com/how-to-make-a-simple-html5-canvas-game/
+  https://stackoverflow.com/questions/4037212/html-canvas-full-screen?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+  https://stackoverflow.com/questions/16919601/html5-canvas-world.camera-viewport-how-to-actally-do-it?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+  http://jsfiddle.net/gfcarv/QKgHs/
+ */
+
 import Bullet9mm from './Weapons/Bullet9mm.js'
 import Util from './Utilities/Util.js';
+import World from './World/World.js';
 
 // Create the canvas
 let canvas = document.createElement("canvas");
 let ctx = canvas.getContext("2d");
-canvas.width = 1280;
-canvas.height = 720;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 document.body.appendChild(canvas);
 
-// Background image
-let bgReady = false;
-let bgImage = new Image();
-bgImage.onload = () => {
-	bgReady = true;
-};
-bgImage.src = "Graphics/Background.png";
-
-// Game objects
-let hero = new Player();
-let enemies = [];
-let environmentObjects = [];
-let bullets = [];
-enemies.push(new LightEnemy(500, 0));
-enemies.push(new RegularEnemy(300, 0));
-enemies.push(new TankEnemy(450, 0));
-environmentObjects.push(new Crate(200, 400));
-environmentObjects.push(new Bush(20, 100));
-environmentObjects.push(new Rock(900, 20));
+let world = new World(canvas);
 
 // Handle controls
 let keysPressed = {};
@@ -57,103 +39,96 @@ addEventListener('mousemove', (e) => {
 
 addEventListener('mousedown', (e) => {
 	clicking = true;
-	bullets.push(new Bullet9mm(hero.x+hero.width/2, hero.y, e.clientX, e.clientY));
-})
-
-
-let reset = () => {
-	hero.x = canvas.width / 2;
-	hero.y = canvas.height / 2;
-};
+	world.bullets.push(new Bullet9mm(world.player.x + world.player.width/2, world.player.y, e.clientX, e.clientY));
+});
 
 let isCollisionWithEnvironmentObject = () => {
-    for (let i = 0; i < environmentObjects.length; i++) {
-        if (Util.isCollision(environmentObjects[i], hero) && environmentObjects[i].isBlocking) {
+    for (let i = 0; i < world.environmentObjects.length; i++) {
+        if (Util.isCollision(world.environmentObjects[i], world.player) && world.environmentObjects[i].isBlocking) {
 			return true;
         }
     }
     return false;
 };
+
 // Update game objects
 let update = (modifier) => {
 	if (87 in keysPressed) { // Player holding up
-		hero.y -= hero.speed * modifier;
+		world.player.y -= world.player.speed * modifier;
 		if(isCollisionWithEnvironmentObject()) {
-            hero.y += hero.speed * modifier;
+            world.player.y += world.player.speed * modifier;
         }
 	}
 	if (83 in keysPressed) { // Player holding down
-		hero.y += hero.speed * modifier;
+		world.player.y += world.player.speed * modifier;
         if(isCollisionWithEnvironmentObject()) {
-            hero.y -= hero.speed * modifier;
+            world.player.y -= world.player.speed * modifier;
         }
 	}
 	if (65 in keysPressed) { // Player holding left
-		hero.x -= hero.speed * modifier;
+		world.player.x -= world.player.speed * modifier;
         if(isCollisionWithEnvironmentObject()) {
-            hero.x += hero.speed * modifier;
+            world.player.x += world.player.speed * modifier;
         }
 	}
 	if (68 in keysPressed) { // Player holding right
-		hero.x += hero.speed * modifier;
+		world.player.x += world.player.speed * modifier;
         if(isCollisionWithEnvironmentObject()) {
-            hero.x -= hero.speed * modifier;
+            world.player.x -= world.player.speed * modifier;
         }
 	}
 
-	for(let i = 0; i < enemies.length; i++) {
-		enemies[i].move(hero, modifier, environmentObjects);
-		if(enemies[i].health <= 0) {
-			enemies.splice(i, 1);
-		}
-		if(enemies[i].attackCooldown > 0) {
-			enemies[i].attackCooldown -= 5;
-		}
-	}
-	for(let i = 0; i < bullets.length; i++) {
-		bullets[i].move(modifier, environmentObjects, enemies);
-	}
-	for(let i = 0; i < environmentObjects.length; i++) {
-		if(environmentObjects[i].health <= 0) {
-			environmentObjects.splice(i, 1);
+	for(let i = world.enemies.length - 1; i >= 0; i--) {
+		world.enemies[i].move(world.player, modifier, world.environmentObjects);
+        if(world.enemies[i].attackCooldown > 0) {
+            world.enemies[i].attackCooldown -= 5;
+        }
+		if(world.enemies[i].health <= 0) {
+			world.enemies.splice(i, 1);
 		}
 	}
-
+	for(let i = world.bullets.length - 1; i >= 0; i--) {
+		world.bullets[i].move(modifier, world.environmentObjects, world.enemies);
+        if(world.bullets[i].live == false){
+            world.bullets.splice(i, 1);
+        }
+	}
+	for(let i = world.environmentObjects.length - 1; i >= 0; i--) {
+		if(world.environmentObjects[i].health <= 0) {
+			world.environmentObjects.splice(i, 1);
+		}
+	}
+	console.log(world.enemies)
 };
 
 // Draw everything
 let render = () => {
-	if(bgReady) {
-		ctx.drawImage(bgImage, 0, 0);
+	if(world.isBackgroundLoaded) {
+		world.drawBackground(ctx, canvas);
 	}
 
-	if(hero.isImageLoaded) {
-	  hero.draw(ctx);
+	if(world.player.isImageLoaded) {
+	  world.player.draw(ctx, world.camera);
 	}
 
-    for(let i = 0; i < enemies.length; i++) {
-    	if(enemies[i].isImageLoaded) {
-				enemies[i].draw(ctx);
-			}
+    for(let i = 0; i < world.enemies.length; i++) {
+    	if(world.enemies[i].isImageLoaded) {
+			world.enemies[i].draw(ctx, world.camera);
+		}
     }
 
-    for(let i = 0; i < environmentObjects.length; i++) {
-			if(environmentObjects[i].isImageLoaded) {
-				environmentObjects[i].draw(ctx);
-			}
+    for(let i = 0; i < world.environmentObjects.length; i++) {
+		if(world.environmentObjects[i].isImageLoaded) {
+			world.environmentObjects[i].draw(ctx, world.camera);
 		}
-		//Remove bullets that aren't live
-		for(let i = 0; i < bullets.length; i++) {
-			if(bullets[i].live == false){
-				bullets.splice(i, 1);
-			}
+	}
+
+	//Render all the world.bullets at their locations and remove world.bullets that aren't live
+	for(let i = 0; i < world.bullets.length; i++) {
+		if(world.bullets[i].isImageLoaded && world.bullets[i].live) {
+			world.bullets[i].draw(ctx, world.camera);
 		}
-		//Render all the bullets at their locations and remove bullets that aren't live
-		for(let i = 0; i < bullets.length; i++) {
-			if(bullets[i].isImageLoaded && bullets[i].live) {
-				bullets[i].draw(ctx);
-			}
-		}
+	}
 };
 
 // The main game loop
@@ -162,6 +137,10 @@ let main = () => {
 	let delta = now - then;
 
 	update(delta / 1000);
+	world.camera.update();
+	console.log('world.camera.x = ' + world.camera.x + '\nworld.camera.y = ' + world.camera.y);
+	// breaks when character/world.camera moves too far down or to the right
+	// bullet ultra messed up
 	render();
 
 	then = now;
@@ -178,5 +157,4 @@ requestAnimationFrame = window.requestAnimationFrame ||
 
 // Let's play this game!
 let then = Date.now();
-reset();
 main();
