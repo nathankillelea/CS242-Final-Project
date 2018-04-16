@@ -1,0 +1,8 @@
+1. Mini map
+2. Improved hit detection
+3. Randomly generate objects
+4. Improve visuals
+5. Rotate player towards cursor, enemies towards player
+6. Refactor Main into a Game class
+7. Improved enemy pathing
+8. Final boss + more enemies

@@ -5,6 +5,7 @@ import TankEnemy from "../Enemies/TankEnemy";
 import RegularEnemy from "../Enemies/RegularEnemy";
 import LightEnemy from "../Enemies/LightEnemy";
 import ProjectileEnemy from "../Enemies/ProjectileEnemy";
+import MiniBoss from '../Enemies/MiniBoss';
 import Player from "../Players/Player";
 import Camera from "../Players/Camera";
 import Util from "../Utilities/Util";
@@ -56,10 +57,11 @@ class World {
      * This function starts the wave by pushing enemies onto the enemies array.
      */
     startWave() {
-        let lightEnemyCap = this.wave * 5;
-        let regularEnemyCap = this.wave * 5;
-        let tankEnemyCap = this.wave * 2;
-        let projectileEnemyCap = Math.floor(this.wave/3)*3;
+        let lightEnemyCap = this.wave * 10;
+        let regularEnemyCap = this.wave * 10;
+        let tankEnemyCap = this.wave * 5;
+        let projectileEnemyCap = Math.floor(this.wave/2)*5;
+        let miniBossCap = Math.floor(this.wave/5);
 
         for(let i = 0; i < lightEnemyCap; i++)
             this.enemies.push(new LightEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
@@ -69,6 +71,8 @@ class World {
             this.enemies.push(new TankEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
         for(let i = 0; i < projectileEnemyCap; i++)
             this.enemies.push(new ProjectileEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < miniBossCap; i++)
+            this.enemies.push(new MiniBoss(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
 
         let collisionFlag = true;
         while(collisionFlag === true) {

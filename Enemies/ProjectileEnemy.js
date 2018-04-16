@@ -15,6 +15,9 @@ class ProjectileEnemy extends Enemy {
     constructor(x, y) {
         super(x, y, 96, 40, 10, 250);
         this.shootCooldown = 300;
+        this.shootCooldownRate = 1;
+        this.shootCooldownReset = 300;
+        this.shootAmount = 1;
         super.loadImage("Graphics/ProjectileEnemy.png");
     }
 }

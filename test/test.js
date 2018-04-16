@@ -11,8 +11,8 @@ import Util from '../Utilities/Util.js';
 import Crate from '../EnvironmentObjects/Crate.js';
 import Bush from '../EnvironmentObjects/Bush.js';
 import Rock from '../EnvironmentObjects/Rock.js';
-import Bullet from '../Weapons/Bullet.js';
-import Bullet9mm from '../Weapons/Bullet9mm.js';
+import ProjectileEnemy from '../Enemies/ProjectileEnemy.js';
+import MiniBoss from '../Enemies/MiniBoss.js';
 
 let assert = require('assert');
 
@@ -20,6 +20,8 @@ describe('Enemies', () => {
     let light = new LightEnemy(100, 100);
     let regular = new RegularEnemy(400, 100);
     let tank = new TankEnemy(800, 100);
+    let projectileEnemy = new ProjectileEnemy(1000, 1000);
+    let miniboss = new MiniBoss(5000, 5000);
     describe('Light Enemy', () => {
         describe('Creation', () => {
             it('should have 128 velocity, 10 health, 10 damage, and give 50 points on kill', () => {
@@ -71,6 +73,42 @@ describe('Enemies', () => {
                 assert.equal(player.health, 100);
                 tank.attack(player);
                 assert.equal(player.health, 75);
+            })
+        })
+    });
+    describe('Projectile Enemy', () => {
+        describe('Creation', () => {
+            it('should have 96 velocity, 40 health, 10 damage, and give 250 points on kill', () => {
+                assert.equal(projectileEnemy.velocity, 96);
+                assert.equal(projectileEnemy.health, 40);
+                assert.equal(projectileEnemy.damage, 10);
+                assert.equal(projectileEnemy.pointsOnKill, 250);
+            })
+        });
+        describe('Attack', () => {
+            it('should remove 10 health from the player', () => {
+                let player = new Player();
+                assert.equal(player.health, 100);
+                projectileEnemy.attack(player);
+                assert.equal(player.health, 90);
+            })
+        })
+    });
+    describe('MiniBoss Enemy', () => {
+        describe('Creation', () => {
+            it('should have 128 velocity, 500 health, 50 damage, and give 1000 points on kill', () => {
+                assert.equal(miniboss.velocity, 128);
+                assert.equal(miniboss.health, 500);
+                assert.equal(miniboss.damage, 50);
+                assert.equal(miniboss.pointsOnKill, 1000);
+            })
+        });
+        describe('Attack', () => {
+            it('should remove 50 health from the player', () => {
+                let player = new Player();
+                assert.equal(player.health, 100);
+                miniboss.attack(player);
+                assert.equal(player.health, 50);
             })
         })
     })

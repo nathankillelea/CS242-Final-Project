@@ -12,6 +12,7 @@ import World from './World/World.js';
 import Cursor from './Cursor.js';
 import ProjectileEnemy from './Enemies/ProjectileEnemy.js';
 import EnemyProjectile from "./Enemies/EnemyProjectile";
+import MiniBoss from './Enemies/MiniBoss';
 
 // Create the canvas
 let canvas = document.createElement("canvas");
@@ -109,12 +110,12 @@ let update = (modifier) => {
         world.enemies[i].move(world.player, modifier, world.environmentObjects);
         if(world.enemies[i].attackCooldown > 0)
             world.enemies[i].attackCooldown -= 5;
-        if(world.enemies[i] instanceof ProjectileEnemy) {
+        if(world.enemies[i] instanceof ProjectileEnemy || world.enemies[i] instanceof MiniBoss) {
         	if(world.enemies[i].shootCooldown > 0)
-        		world.enemies[i].shootCooldown -= 1;
+        		world.enemies[i].shootCooldown -= world.enemies[i].shootCooldownRate;
         	else {
-                world.enemyProjectiles.push(new EnemyProjectile(world.enemies[i].x + world.enemies[i].width/2, world.enemies[i].y + world.enemies[i].height/2, world.player.x + world.player.width/2, world.player.y + world.player.height/2));
-                world.enemies[i].shootCooldown += 300;
+				world.enemyProjectiles.push(new EnemyProjectile(world.enemies[i].x + world.enemies[i].width/2, world.enemies[i].y + world.enemies[i].height/2, world.player.x + world.player.width/2, world.player.y + world.player.height/2));
+        		world.enemies[i].shootCooldown += world.enemies[i].shootCooldownReset;
 			}
 		}
         if(world.enemies[i].health <= 0)
@@ -155,7 +156,7 @@ let render = () => {
         ctx.font = "24px sans-serif";
         ctx.textAlign = "center";
         ctx.fillStyle='#000';
-        ctx.fillText("Try again?", canvas.width/2 - 100 + 100, canvas.height/2 + 25 + 50)
+        ctx.fillText("Try again?", canvas.width/2 - 100 + 100, canvas.height/2 + 25 + 50);
     }
     else {
         if(world.isBackgroundLoaded) {
