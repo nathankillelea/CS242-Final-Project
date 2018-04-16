@@ -225,13 +225,13 @@ let render = () => {
             ctx.strokeText("Wave " + world.wave, canvas.width/2, 50);
             ctx.fillText(world.enemies.length + " Enemies Left", canvas.width/2 + 350, 50);
             ctx.strokeText(world.enemies.length + " Enemies Left", canvas.width/2 + 350, 50);
+            //This text displays the active weapon to the player (could be positioned better later)
+            ctx.font = "48px sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillStyle='#FFF';
+            ctx.fillText('Active Weapon: ' + world.player.inventory[world.player.active_index].name, canvas.width/2, 125);
+            ctx.strokeText('Active Weapon: ' + world.player.inventory[world.player.active_index].name, canvas.width/2, 125);
         }
-        //This text displays the active weapon to the player (could be positioned better later)
-        ctx.font = "48px sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillStyle='#FFF';
-        ctx.fillText('Active Weapon: ' + world.player.inventory[world.player.active_index].name, canvas.width/2 - 290, 150);
-        ctx.strokeText('Active Weapon: ' + world.player.inventory[world.player.active_index].name, canvas.width/2 - 290, 150);
     }
     ctx.drawImage(cursor.image, mouse[0] - cursor.image.width/2, mouse[1] - cursor.image.height/2);
 };
