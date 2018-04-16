@@ -75,27 +75,35 @@ class Enemy {
         this.angle = Math.atan2(diffY, diffX);
 
         if(diffX > 0) {
-            this.x += this.velocity*modifier;
-            if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
-                this.x -= this.velocity*modifier;
+            if(this.x + this.width <= 10000) {
+                this.x += this.velocity*modifier;
+                if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
+                    this.x -= this.velocity*modifier;
+                }
             }
         }
         else if(diffX < 0) {
-            this.x -= this.velocity*modifier;
-            if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
-                this.x += this.velocity*modifier;
+            if(this.x >= 0) {
+                this.x -= this.velocity*modifier;
+                if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
+                    this.x += this.velocity*modifier;
+                }
             }
         }
         if(diffY > 0) {
-            this.y += this.velocity*modifier;
-            if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
-                this.y -= this.velocity*modifier;
+            if(this.y + this.height <= 5625) {
+                this.y += this.velocity*modifier;
+                if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
+                    this.y -= this.velocity*modifier;
+                }
             }
         }
         else if(diffY < 0) {
-            this.y -= this.velocity*modifier;
-            if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
-                this.y += this.velocity*modifier;
+            if(this.y >= 0) {
+                this.y -= this.velocity*modifier;
+                if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
+                    this.y += this.velocity*modifier;
+                }
             }
         }
 

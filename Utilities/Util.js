@@ -45,10 +45,12 @@ class Util {
         return -1;
     }
 
-    static isWithin(x1, y1, width1, height1, x2, y2, width2, height2) {
-
-    }
-
+    /**
+     * This function returns a random number in the given interval.
+     * @param from
+     * @param to
+     * @returns {number}
+     */
     static randomIntFromInterval(from, to) {
         return Math.floor(Math.random() * (to - from + 1) + from)
     }

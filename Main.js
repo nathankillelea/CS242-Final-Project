@@ -39,7 +39,13 @@ addEventListener('mousemove', (e) => {
 
 addEventListener('mousedown', (e) => {
 	clicking = true;
-	world.bullets.push(new Bullet9mm(world.player.x + world.player.width/2, world.player.y, e.clientX, e.clientY));
+	world.bullets.push(new Bullet9mm(world.player.x + world.player.width/2, world.player.y, e.clientX+world.camera.x, e.clientY+world.camera.y));
+    if(world.player.health < 0) {
+        if(e.clientX > canvas.width/2 - 100 && e.clientX < (canvas.width/2 - 100+200)
+            && e.clientY > canvas.height/2 + 25 && e.clientY < canvas.height/2 + 25 + 100) {
+            world.start(canvas);
+        }
+    }
 });
 
 let isCollisionWithEnvironmentObject = () => {
@@ -55,27 +61,41 @@ let isCollisionWithEnvironmentObject = () => {
 let update = (modifier) => {
 	if(world.player.health > 0) {
         if (87 in keysPressed) { // Player holding up
-            world.player.y -= world.player.speed * modifier;
-            if(isCollisionWithEnvironmentObject()) {
-                world.player.y += world.player.speed * modifier;
-            }
+        	if(world.player.y >= 0) {
+                world.player.y -= world.player.speed * modifier;
+                if(isCollisionWithEnvironmentObject()) {
+                    world.player.y += world.player.speed * modifier;
+                }
+			}
         }
         if (83 in keysPressed) { // Player holding down
-            world.player.y += world.player.speed * modifier;
-            if(isCollisionWithEnvironmentObject()) {
-                world.player.y -= world.player.speed * modifier;
-            }
+        	if(world.player.y + world.player.height <= 5625) {
+                world.player.y += world.player.speed * modifier;
+                if(isCollisionWithEnvironmentObject()) {
+                    world.player.y -= world.player.speed * modifier;
+                }
+			}
         }
         if (65 in keysPressed) { // Player holding left
-            world.player.x -= world.player.speed * modifier;
-            if(isCollisionWithEnvironmentObject()) {
-                world.player.x += world.player.speed * modifier;
-            }
+        	if(world.player.x >= 0) {
+                world.player.x -= world.player.speed * modifier;
+                if(isCollisionWithEnvironmentObject()) {
+                    world.player.x += world.player.speed * modifier;
+                }
+			}
         }
         if (68 in keysPressed) { // Player holding right
-            world.player.x += world.player.speed * modifier;
-            if(isCollisionWithEnvironmentObject()) {
-                world.player.x -= world.player.speed * modifier;
+        	if(world.player.x + world.player.width <= 10000) {
+                world.player.x += world.player.speed * modifier;
+                if(isCollisionWithEnvironmentObject()) {
+                    world.player.x -= world.player.speed * modifier;
+                }
+			}
+        }
+        for(let i = world.bullets.length - 1; i >= 0; i--) {
+            world.bullets[i].move(modifier, world.environmentObjects, world.enemies);
+            if(world.bullets[i].live == false){
+                world.bullets.splice(i, 1);
             }
         }
 	}
@@ -88,12 +108,6 @@ let update = (modifier) => {
 		if(world.enemies[i].health <= 0) {
 			world.enemies.splice(i, 1);
 		}
-	}
-	for(let i = world.bullets.length - 1; i >= 0; i--) {
-		world.bullets[i].move(modifier, world.environmentObjects, world.enemies);
-        if(world.bullets[i].live == false){
-            world.bullets.splice(i, 1);
-        }
 	}
 	for(let i = world.environmentObjects.length - 1; i >= 0; i--) {
 		if(world.environmentObjects[i].health <= 0) {
@@ -110,20 +124,24 @@ let update = (modifier) => {
 
 // Draw everything
 let render = () => {
-	if(world.player.health < 0){
+	if(world.player.health < 0) {
         ctx.font = "128px sans-serif";
         ctx.textAlign = "center";
+        ctx.fillStyle='#FFF';
         ctx.fillText("Game Over", canvas.width/2, canvas.height/2);
+        ctx.fillStyle='#000';
+        ctx.strokeText("Game Over", canvas.width/2, canvas.height/2);
+        ctx.fillStyle='#FFF';
+        ctx.fillRect(canvas.width/2 - 100, canvas.height/2 + 25, 200, 100);
+        ctx.strokeRect(canvas.width/2 - 100, canvas.height/2 + 25, 200, 100);
+        ctx.font = "24px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillStyle='#000';
+        ctx.fillText("Try again?", canvas.width/2 - 100 + 100, canvas.height/2 + 25 + 50)
 	}
 	else {
         if(world.isBackgroundLoaded) {
             world.drawBackground(ctx, canvas);
-        }
-
-        if(world.player.isImageLoaded) {
-            world.player.draw(ctx, world.camera);
-            ctx.font = "48px sans-serif";
-            ctx.fillText(world.player.health + " HP", 10, 50);
         }
 
         for(let i = 0; i < world.enemies.length; i++) {
@@ -137,13 +155,26 @@ let render = () => {
                 world.environmentObjects[i].draw(ctx, world.camera);
             }
         }
-	}
 
-	//Render all the world.bullets at their locations and remove world.bullets that aren't live
-	for(let i = 0; i < world.bullets.length; i++) {
-		if(world.bullets[i].isImageLoaded && world.bullets[i].live) {
-			world.bullets[i].draw(ctx, world.camera);
-		}
+        //Render all the world.bullets at their locations and remove world.bullets that aren't live
+        for(let i = 0; i < world.bullets.length; i++) {
+            if(world.bullets[i].isImageLoaded && world.bullets[i].live) {
+                world.bullets[i].draw(ctx, world.camera);
+            }
+        }
+
+        if(world.player.isImageLoaded) {
+            world.player.draw(ctx, world.camera);
+            ctx.font = "48px sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillStyle='#FFF';
+            ctx.fillText(world.player.health + " HP", canvas.width/2 - 290, 50);
+            ctx.strokeText(world.player.health + " HP", canvas.width/2 - 290, 50);
+            ctx.fillText("Wave " + world.wave, canvas.width/2, 50);
+            ctx.strokeText("Wave " + world.wave, canvas.width/2, 50);
+            ctx.fillText(world.enemies.length + " Enemies Left", canvas.width/2 + 350, 50);
+            ctx.strokeText(world.enemies.length + " Enemies Left", canvas.width/2 + 350, 50);
+        }
 	}
 };
 
@@ -155,13 +186,10 @@ let main = () => {
 	update(delta / 1000);
 	world.camera.update();
 	console.log('world.camera.x = ' + world.camera.x + '\nworld.camera.y = ' + world.camera.y);
-	// breaks when character/world.camera moves too far down or to the right
-	// bullet ultra messed up
 	render();
 
 	then = now;
 
-	// Request to do this again ASAP
 	requestAnimationFrame(main);
 };
 
@@ -171,6 +199,5 @@ requestAnimationFrame = window.requestAnimationFrame ||
 	                    window.msRequestAnimationFrame ||
 	                    window.mozRequestAnimationFrame;
 
-// Let's play this game!
 let then = Date.now();
 main();

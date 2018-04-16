@@ -1,9 +1,9 @@
 class Player {
-  constructor() {
+  constructor(x, y) {
+      this.x = x;
+      this.y = y;
       this.health = 100;
       this.speed = 256;
-      this.x = 250;
-      this.y = 250;
       this.loadImage();
   }
 

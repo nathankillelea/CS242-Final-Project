@@ -58,9 +58,9 @@ class Camera {
             this.x = 0;
         if(this.y < 0)
             this.y = 0;
-        if(this.x > this.worldWidth)
+        if(this.x + this.width > this.worldWidth)
             this.x = this.worldWidth - this.width;
-        if(this.y > this.worldHeight)
+        if(this.y + this.height > this.worldHeight)
             this.y = this.worldHeight - this.height;
     }
 }

@@ -1,9 +1,9 @@
-1. Wave System (Set # of enemies spawn per wave. Wave ends when all enemies are defeated. Waves become increasingly more difficult) (almost done, needs 1-2 more enemy types)
-2. World larger than the screen (needs to be fixed right and bottom)
+1. Wave System (Set # of enemies spawn per wave. Wave ends when all enemies are defeated. Waves become increasingly more difficult) (almost done, needs 1-2 more enemy types) ✔
+2. World larger than the screen (needs to be fixed right and bottom) ✔
 3. Implement 2 unique enemies (One that shoots projectiles at the player, one that does something else such as boss)
-4. Create world object ✔
+4. Create world object, maybe doesn't count
 5. Mini map?
 6. Improved hit detection
-7. Pause + Restart + Game Over
+7. Game Over + Restart ✔
 
-need to add COMMENTS to my STUFF and commit to gitlab and svn as project2
+need to add COMMENTS to my STUFF and TESTING and commit to gitlab and svn as project2
