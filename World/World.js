@@ -4,6 +4,7 @@ import Crate from "../EnvironmentObjects/Crate";
 import TankEnemy from "../Enemies/TankEnemy";
 import RegularEnemy from "../Enemies/RegularEnemy";
 import LightEnemy from "../Enemies/LightEnemy";
+import ProjectileEnemy from "../Enemies/ProjectileEnemy";
 import Player from "../Players/Player";
 import Camera from "../Players/Camera";
 import Util from "../Utilities/Util";
@@ -34,6 +35,7 @@ class World {
         this.enemies = [];
         this.environmentObjects = [];
         this.bullets = [];
+        this.enemyProjectiles = [];
         this.wave = 1;
         this.initializeEnvironment();
         this.startWave();
@@ -55,8 +57,9 @@ class World {
      */
     startWave() {
         let lightEnemyCap = this.wave * 5;
-        let regularEnemyCap = Math.floor(this.wave/2 * 5);
-        let tankEnemyCap = Math.floor(this.wave * 1.5);
+        let regularEnemyCap = this.wave * 5;
+        let tankEnemyCap = this.wave * 2;
+        let projectileEnemyCap = Math.floor(this.wave/3)*3;
 
         for(let i = 0; i < lightEnemyCap; i++)
             this.enemies.push(new LightEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
@@ -64,7 +67,8 @@ class World {
             this.enemies.push(new RegularEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
         for(let i = 0; i < tankEnemyCap; i++)
             this.enemies.push(new TankEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
-        // include the other types as well, maybe if wave == something or > something
+        for(let i = 0; i < projectileEnemyCap; i++)
+            this.enemies.push(new ProjectileEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
 
         let collisionFlag = true;
         while(collisionFlag === true) {

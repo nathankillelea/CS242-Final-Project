@@ -1,7 +1,7 @@
 class Cursor {
-  constructor() {
-      this.loadImage();
-  }
+    constructor() {
+        this.loadImage();
+    }
 
     loadImage() {
         this.isImageLoaded = false;

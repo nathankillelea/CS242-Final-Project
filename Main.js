@@ -10,7 +10,8 @@ import Bullet9mm from './Weapons/Bullet9mm.js'
 import Util from './Utilities/Util.js';
 import World from './World/World.js';
 import Cursor from './Cursor.js';
-
+import ProjectileEnemy from './Enemies/ProjectileEnemy.js';
+import EnemyProjectile from "./Enemies/EnemyProjectile";
 
 // Create the canvas
 let canvas = document.createElement("canvas");
@@ -30,21 +31,21 @@ let mouse = [0,0];
 let clicking = false;
 
 addEventListener("keydown", (e) => {
-	keysPressed[e.keyCode] = true;
+    keysPressed[e.keyCode] = true;
 }, false);
 
 addEventListener("keyup", (e) => {
-	delete keysPressed[e.keyCode];
+    delete keysPressed[e.keyCode];
 }, false);
 
 addEventListener('mousemove', (e) => {
-	mouse[0] = e.clientX;
-	mouse[1] = e.clientY;
+    mouse[0] = e.clientX;
+    mouse[1] = e.clientY;
 }, false);
 
 addEventListener('mousedown', (e) => {
-	clicking = true;
-	world.bullets.push(new Bullet9mm(world.player.x + world.player.width/2, world.player.y, e.clientX+world.camera.x, e.clientY+world.camera.y));
+    clicking = true;
+    world.bullets.push(new Bullet9mm(world.player.x + world.player.width/2, world.player.y, e.clientX+world.camera.x, e.clientY+world.camera.y));
     if(world.player.health < 0) {
         if(e.clientX > canvas.width/2 - 100 && e.clientX < (canvas.width/2 - 100+200)
             && e.clientY > canvas.height/2 + 25 && e.clientY < canvas.height/2 + 25 + 100) {
@@ -55,81 +56,93 @@ addEventListener('mousedown', (e) => {
 
 let isCollisionWithEnvironmentObject = () => {
     for (let i = 0; i < world.environmentObjects.length; i++) {
-        if (Util.isCollision(world.environmentObjects[i], world.player) && world.environmentObjects[i].isBlocking) {
-			return true;
-        }
+        if (Util.isCollision(world.environmentObjects[i], world.player) && world.environmentObjects[i].isBlocking)
+            return true;
     }
     return false;
 };
 
 // Update game objects
 let update = (modifier) => {
-	if(world.player.health > 0) {
+    if(world.player.health > 0) {
         if (87 in keysPressed) { // Player holding up
-        	if(world.player.y >= 0) {
+            if(world.player.y >= 0) {
                 world.player.y -= world.player.speed * modifier;
                 if(isCollisionWithEnvironmentObject()) {
                     world.player.y += world.player.speed * modifier;
                 }
-			}
+            }
         }
         if (83 in keysPressed) { // Player holding down
-        	if(world.player.y + world.player.height <= 5625) {
+            if(world.player.y + world.player.height <= 5625) {
                 world.player.y += world.player.speed * modifier;
                 if(isCollisionWithEnvironmentObject()) {
                     world.player.y -= world.player.speed * modifier;
                 }
-			}
+            }
         }
         if (65 in keysPressed) { // Player holding left
-        	if(world.player.x >= 0) {
+            if(world.player.x >= 0) {
                 world.player.x -= world.player.speed * modifier;
                 if(isCollisionWithEnvironmentObject()) {
                     world.player.x += world.player.speed * modifier;
                 }
-			}
+            }
         }
         if (68 in keysPressed) { // Player holding right
-        	if(world.player.x + world.player.width <= 10000) {
+            if(world.player.x + world.player.width <= 10000) {
                 world.player.x += world.player.speed * modifier;
                 if(isCollisionWithEnvironmentObject()) {
                     world.player.x -= world.player.speed * modifier;
                 }
-			}
+            }
         }
         for(let i = world.bullets.length - 1; i >= 0; i--) {
             world.bullets[i].move(modifier, world.environmentObjects, world.enemies);
-            if(world.bullets[i].live == false){
+            if(world.bullets[i].live === false) {
                 world.bullets.splice(i, 1);
             }
         }
-	}
+    }
 
-	for(let i = world.enemies.length - 1; i >= 0; i--) {
-		world.enemies[i].move(world.player, modifier, world.environmentObjects);
-        if(world.enemies[i].attackCooldown > 0) {
+    for(let i = world.enemies.length - 1; i >= 0; i--) {
+        world.enemies[i].move(world.player, modifier, world.environmentObjects);
+        if(world.enemies[i].attackCooldown > 0)
             world.enemies[i].attackCooldown -= 5;
-        }
-		if(world.enemies[i].health <= 0) {
-			world.enemies.splice(i, 1);
+        if(world.enemies[i] instanceof ProjectileEnemy) {
+        	if(world.enemies[i].shootCooldown > 0)
+        		world.enemies[i].shootCooldown -= 1;
+        	else {
+                world.enemyProjectiles.push(new EnemyProjectile(world.enemies[i].x + world.enemies[i].width/2, world.enemies[i].y + world.enemies[i].height/2, world.player.x + world.player.width/2, world.player.y + world.player.height/2));
+                world.enemies[i].shootCooldown += 300;
+			}
 		}
-	}
-	for(let i = world.environmentObjects.length - 1; i >= 0; i--) {
-		if(world.environmentObjects[i].health <= 0) {
-			world.environmentObjects.splice(i, 1);
-		}
-	}
+        if(world.enemies[i].health <= 0)
+            world.enemies.splice(i, 1);
+    }
 
-	if(world.enemies.length === 0) {
-		world.wave += 1;
-		world.startWave();
-	}
+    for(let i = world.enemyProjectiles.length - 1; i >= 0; i--) {
+        world.enemyProjectiles[i].move(modifier, world.environmentObjects, world.player);
+        if(world.enemyProjectiles[i].live === false) {
+            world.enemyProjectiles.splice(i, 1);
+        }
+    }
+
+    for(let i = world.environmentObjects.length - 1; i >= 0; i--) {
+        if(world.environmentObjects[i].health <= 0)
+            world.environmentObjects.splice(i, 1);
+    }
+
+    if(world.enemies.length === 0) {
+        world.wave += 1;
+        world.startWave();
+    }
 
 };
 
 // Draw everything
 let render = () => {
-	if(world.player.health < 0) {
+    if(world.player.health < 0) {
         ctx.font = "128px sans-serif";
         ctx.textAlign = "center";
         ctx.fillStyle='#FFF';
@@ -143,8 +156,8 @@ let render = () => {
         ctx.textAlign = "center";
         ctx.fillStyle='#000';
         ctx.fillText("Try again?", canvas.width/2 - 100 + 100, canvas.height/2 + 25 + 50)
-	}
-	else {
+    }
+    else {
         if(world.isBackgroundLoaded) {
             world.drawBackground(ctx, canvas);
         }
@@ -168,6 +181,12 @@ let render = () => {
             }
         }
 
+        for(let i = 0; i < world.enemyProjectiles.length; i++) {
+            if(world.enemyProjectiles[i].isImageLoaded && world.enemyProjectiles[i].live) {
+                world.enemyProjectiles[i].draw(ctx, world.camera);
+            }
+        }
+
         if(world.player.isImageLoaded) {
             world.player.draw(ctx, world.camera);
             ctx.font = "48px sans-serif";
@@ -180,30 +199,30 @@ let render = () => {
             ctx.fillText(world.enemies.length + " Enemies Left", canvas.width/2 + 350, 50);
             ctx.strokeText(world.enemies.length + " Enemies Left", canvas.width/2 + 350, 50);
         }
-	}
-	ctx.drawImage(cursor.image, mouse[0] - cursor.image.width/2, mouse[1] - cursor.image.height/2);
+    }
+    ctx.drawImage(cursor.image, mouse[0] - cursor.image.width/2, mouse[1] - cursor.image.height/2);
 };
 
 // The main game loop
 let main = () => {
-	let now = Date.now();
-	let delta = now - then;
+    let now = Date.now();
+    let delta = now - then;
 
-	update(delta / 1000);
-	world.camera.update();
-	console.log('world.camera.x = ' + world.camera.x + '\nworld.camera.y = ' + world.camera.y);
-	render();
+    update(delta / 1000);
+    world.camera.update();
+    console.log('world.camera.x = ' + world.camera.x + '\nworld.camera.y = ' + world.camera.y);
+    render();
 
-	then = now;
+    then = now;
 
-	requestAnimationFrame(main);
+    requestAnimationFrame(main);
 };
 
 // Cross-browser support for requestAnimationFrame
 requestAnimationFrame = window.requestAnimationFrame ||
-	                    window.webkitRequestAnimationFrame ||
-	                    window.msRequestAnimationFrame ||
-	                    window.mozRequestAnimationFrame;
+    window.webkitRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    window.mozRequestAnimationFrame;
 
 let then = Date.now();
 main();

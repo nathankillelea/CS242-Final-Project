@@ -36,6 +36,7 @@ class EnvironmentObject {
     /**
      * The draw function draws the image on the canvas at the x and y position of the EnvironmentObject.
      * @param ctx The context of the canvas.
+     * @param camera The camera object.
      */
     draw(ctx, camera) {
         ctx.drawImage(this.image, this.x - camera.x, this.y - camera.y);
