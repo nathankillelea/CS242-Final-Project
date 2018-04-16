@@ -3,8 +3,8 @@ import Util from '../Utilities/Util.js';
 
 class Bullet9mm extends Bullet {
   constructor(x, y, destX, destY) {
-    super(400, 10, x, y, destX, destY);
-    super.loadImage("Graphics/Bullet.png");
+    super(1000, 10, x, y, destX, destY);
+    super.loadImage("Graphics/bullet3.png");
   }
 }
 

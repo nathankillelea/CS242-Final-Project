@@ -12,10 +12,21 @@ class Bullet{
       this.destX = destX;
       this.destY = destY;
       this.cooldown = 0;
-      //this.angle = Math.PI/2;
       this.live = true;
+      let diffX = this.destX - this.x;
+      let diffY = this.destY - this.y;
+      let bigger = 1
+      if(Math.abs(diffX) > Math.abs(diffY)){
+        bigger = diffX
+        this.coeffX = diffX / Math.abs(diffX)
+        this.coeffY = diffY / Math.abs(diffX)
+      }
+      else {
+        bigger = diffY
+        this.coeffY = diffY / Math.abs(diffY)
+        this.coeffX = diffX / Math.abs(diffY)
+      }
   }
-
   loadImage(url) {
       this.isImageLoaded = false;
       this.image = new Image();
@@ -32,44 +43,13 @@ class Bullet{
   //hitSoemthing method will call a damage function and the damage will be applied, so
   //this function sets this.live = false meaning the bullet is no longer live.
   move(modifier, environmentObjects, enemies){
-    let diffX = this.destX - this.x;
-    let diffY = this.destY - this.y;
-    let length = Math.sqrt(diffX * diffX + diffY * diffY);
-    /*if(length !== 0){
-      diffX /= length;
-      diffY /= length;
-    }*/
-
-    //this.angle = Math.atan2(diffY, diffX);
-
-    if(diffX > 0) {
-        this.x += this.velocity*modifier;
-        if(this.hitSomething(environmentObjects, enemies)) {
-            this.live = false;
-        }
-    }
-    else if(diffX < 0) {
-        this.x -= this.velocity*modifier;
-        if(this.hitSomething(environmentObjects, enemies)) {
-            this.live = false;
-        }
-    }
-    else{
+    //let length = Math.sqrt(diffX * diffX + diffY * diffY);
+    this.x += this.velocity*modifier*this.coeffX;
+    this.y += this.velocity*modifier*this.coeffY;
+    if(this.hitSomething(environmentObjects, enemies)) {
       this.live = false;
     }
-    if(diffY > 0) {
-        this.y += this.velocity*modifier;
-        if(this.hitSomething(environmentObjects, enemies)) {
-            this.live = false;
-        }
-    }
-    else if(diffY < 0) {
-        this.y -= this.velocity*modifier;
-        if(this.hitSomething(environmentObjects, enemies)) {
-            this.live = false;
-        }
-    }
-    else {
+    if(this.x < 0 || this.x > 10000 || this.y < 0 || this.y > 5625){
       this.live = false;
     }
 
