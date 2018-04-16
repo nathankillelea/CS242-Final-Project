@@ -1,7 +1,7 @@
 import Util from '../Utilities/Util.js';
 
 class Bullet{
-    constructor(velocity, damage, x, y, destX, destY) {
+    constructor(velocity, damage, x, y, destX, destY, penetrates) {
         this.velocity = velocity;
         this.damage = damage;
         this.x = x;
@@ -9,6 +9,7 @@ class Bullet{
         this.destX = destX;
         this.destY = destY;
         this.live = true;
+        this.isPenetrating = true;
         let diffX = this.destX - this.x;
         let diffY = this.destY - this.y;
         if(Math.abs(diffX) > Math.abs(diffY)) {
@@ -38,7 +39,7 @@ class Bullet{
     move(modifier, environmentObjects, enemies){
         this.x += this.velocity*modifier*this.coeffX;
         this.y += this.velocity*modifier*this.coeffY;
-        if(this.hitSomething(environmentObjects, enemies)) {
+        if(this.hitSomething(environmentObjects, enemies) && this.isPenetrating == false) {
             this.live = false;
         }
         if(this.x < 0 || this.x > 10000 || this.y < 0 || this.y > 5625) {

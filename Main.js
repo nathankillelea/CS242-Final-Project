@@ -6,7 +6,10 @@
   http://jsfiddle.net/gfcarv/QKgHs/
  */
 
-import Bullet9mm from './Weapons/Bullet9mm.js'
+import Bullet9mm from './Weapons/Bullet9mm.js';
+import Bullet50cal from './Weapons/Bullet50cal.js';
+import Sniper from './Weapons/Sniper.js';
+import Pistol from './Weapons/Pistol.js';
 import Util from './Utilities/Util.js';
 import World from './World/World.js';
 import Cursor from './Cursor.js';
@@ -29,7 +32,9 @@ let cursor = new Cursor();
 // Handle controls
 let keysPressed = {};
 let mouse = [0,0];
-let clicking = false;
+//This variable would be used to tell when click is being held
+//Which will be needed when automatic weapons are added
+//let clicking = false;
 
 addEventListener("keydown", (e) => {
     keysPressed[e.keyCode] = true;
@@ -45,8 +50,16 @@ addEventListener('mousemove', (e) => {
 }, false);
 
 addEventListener('mousedown', (e) => {
-    clicking = true;
-    world.bullets.push(new Bullet9mm(world.player.x + world.player.width/2, world.player.y, e.clientX+world.camera.x, e.clientY+world.camera.y));
+    //clicking = true;
+    let wep = world.player.inventory[world.player.active_index];
+
+    //Fire the correct bullet type for the currently equipped weapon.
+    //This could be done more gracefully in the future
+    if(wep instanceof Pistol )
+      world.bullets.push(new Bullet9mm(world.player.x + world.player.width/2, world.player.y, e.clientX+world.camera.x, e.clientY+world.camera.y));
+    else if(wep instanceof Sniper){
+      world.bullets.push(new Bullet50cal(world.player.x + world.player.width/2, world.player.y, e.clientX+world.camera.x, e.clientY+world.camera.y));
+    }
     if(world.player.health < 0) {
         if(e.clientX > canvas.width/2 - 100 && e.clientX < (canvas.width/2 - 100+200)
             && e.clientY > canvas.height/2 + 25 && e.clientY < canvas.height/2 + 25 + 100) {
@@ -66,6 +79,7 @@ let isCollisionWithEnvironmentObject = () => {
 // Update game objects
 let update = (modifier) => {
     if(world.player.health > 0) {
+      //These statements control movement with simple WASD for each direction
         if (87 in keysPressed) { // Player holding up
             if(world.player.y >= 0) {
                 world.player.y -= world.player.speed * modifier;
@@ -98,6 +112,13 @@ let update = (modifier) => {
                 }
             }
         }
+        //These controls change the active weapon with simple 1,2,3,etc controls for inventory
+        if (49 in keysPressed) { // Player pressed 1
+            world.player.active_index = 0;
+        }
+        if (50 in keysPressed) { // Player pressed 2
+            world.player.active_index = 1;
+        }
         for(let i = world.bullets.length - 1; i >= 0; i--) {
             world.bullets[i].move(modifier, world.environmentObjects, world.enemies);
             if(world.bullets[i].live === false) {
@@ -105,7 +126,6 @@ let update = (modifier) => {
             }
         }
     }
-
     for(let i = world.enemies.length - 1; i >= 0; i--) {
         world.enemies[i].move(world.player, modifier, world.environmentObjects);
         if(world.enemies[i].attackCooldown > 0)
@@ -200,6 +220,12 @@ let render = () => {
             ctx.fillText(world.enemies.length + " Enemies Left", canvas.width/2 + 350, 50);
             ctx.strokeText(world.enemies.length + " Enemies Left", canvas.width/2 + 350, 50);
         }
+        //This text displays the active weapon to the player (could be positioned better later)
+        ctx.font = "48px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillStyle='#FFF';
+        ctx.fillText('Active Weapon: ' + world.player.inventory[world.player.active_index].name, canvas.width/2 - 290, 150);
+        ctx.strokeText('Active Weapon: ' + world.player.inventory[world.player.active_index].name, canvas.width/2 - 290, 150);
     }
     ctx.drawImage(cursor.image, mouse[0] - cursor.image.width/2, mouse[1] - cursor.image.height/2);
 };
