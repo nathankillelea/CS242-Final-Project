@@ -1,0 +1,4 @@
+1. Added custom crosshair.
+2. Fixed path of bullet when shooting to be in a straight line.
+3. Added sniper weapon with penetrating bullet property.
+4. Added inventory system with ability to switch between weapons.

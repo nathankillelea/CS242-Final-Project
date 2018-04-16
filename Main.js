@@ -36,6 +36,8 @@ let mouse = [0,0];
 //Which will be needed when automatic weapons are added
 //let clicking = false;
 
+//These event listeners simply catch any basic inputs and store them in global variables
+//that later functions can check to handle movement and inputs
 addEventListener("keydown", (e) => {
     keysPressed[e.keyCode] = true;
 }, false);
@@ -60,6 +62,8 @@ addEventListener('mousedown', (e) => {
     else if(wep instanceof Sniper){
       world.bullets.push(new Bullet50cal(world.player.x + world.player.width/2, world.player.y, e.clientX+world.camera.x, e.clientY+world.camera.y));
     }
+    //The bounding box in this if statement tells if the mouse was clicked inside the try again button,
+    //and if so the world is restarted.
     if(world.player.health < 0) {
         if(e.clientX > canvas.width/2 - 100 && e.clientX < (canvas.width/2 - 100+200)
             && e.clientY > canvas.height/2 + 25 && e.clientY < canvas.height/2 + 25 + 100) {
@@ -161,8 +165,9 @@ let update = (modifier) => {
 
 };
 
-// Draw everything
+// This loop will draw all images and text
 let render = () => {
+    //When player health is < 0 the game is over so we must display the "Game Over" text and add a Try Again button
     if(world.player.health < 0) {
         ctx.font = "128px sans-serif";
         ctx.textAlign = "center";
@@ -179,16 +184,17 @@ let render = () => {
         ctx.fillText("Try again?", canvas.width/2 - 100 + 100, canvas.height/2 + 25 + 50);
     }
     else {
+        //Render the Background
         if(world.isBackgroundLoaded) {
             world.drawBackground(ctx, canvas);
         }
-
+        //Render all enemies in the world
         for(let i = 0; i < world.enemies.length; i++) {
             if(world.enemies[i].isImageLoaded) {
                 world.enemies[i].draw(ctx, world.camera);
             }
         }
-
+        //Render all environment objects that exist in the world
         for(let i = 0; i < world.environmentObjects.length; i++) {
             if(world.environmentObjects[i].isImageLoaded) {
                 world.environmentObjects[i].draw(ctx, world.camera);
@@ -201,7 +207,7 @@ let render = () => {
                 world.bullets[i].draw(ctx, world.camera);
             }
         }
-
+        //Render all the enemy projectiles just like bullets
         for(let i = 0; i < world.enemyProjectiles.length; i++) {
             if(world.enemyProjectiles[i].isImageLoaded && world.enemyProjectiles[i].live) {
                 world.enemyProjectiles[i].draw(ctx, world.camera);

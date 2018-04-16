@@ -12,6 +12,9 @@ class Bullet{
         this.isPenetrating = true;
         let diffX = this.destX - this.x;
         let diffY = this.destY - this.y;
+        //This logic finds a coefficient for X and Y that can be applied
+        //to the move function in order to move the bullet in a straight line
+        //directly to its destination.
         if(Math.abs(diffX) > Math.abs(diffY)) {
             this.coeffX = diffX / Math.abs(diffX);
             this.coeffY = diffY / Math.abs(diffX);
@@ -34,8 +37,10 @@ class Bullet{
     //Moves the bullet from its starting point (which will be the player's location)
     //to its destination (which will be the cursor location when the bullet is created).
     //Each time move is called it is checked if the bullet hits anything, if it does the
-    //hitSoemthing method will call a damage function and the damage will be applied, so
+    //hitSomething method will call a damage function and the damage will be applied, so
     //this function sets this.live = false meaning the bullet is no longer live.
+    //If the bullet isPenetrating that means it will not be set to 'dead' upon a collision with something
+    //This allows penetrating bullets to travel through multiple targets and through world objects.
     move(modifier, environmentObjects, enemies){
         this.x += this.velocity*modifier*this.coeffX;
         this.y += this.velocity*modifier*this.coeffY;
@@ -57,7 +62,9 @@ class Bullet{
     damageEnvironment(environmentObject){
         environmentObject.health -= this.damage;
     }
-
+    //Checks if we hit an environment object then checks if we hit an enemy. in either case it calls the
+    //corresponding damage function and then returns true to indicate that something was hit, which tells move to set the
+    //bullet's live value accordingly
     hitSomething(environmentObjects, enemies) {
         for(let i = 0; i < environmentObjects.length; i++) {
             if(Util.isCollision(this, environmentObjects[i]) && environmentObjects[i].isBlocking) {

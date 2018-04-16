@@ -1,6 +1,13 @@
 import Pistol from '../Weapons/Pistol.js'
 import Sniper from '../Weapons/Sniper.js'
 class Player {
+  //this.x = x position
+  //this.y = y position
+  //this.health = player's life
+  //this.speed = player's movespeed
+  //this.loadImage() is a function to attach the image to the player.
+  //The player has an array to hold his items and he will start with a pistol and sniper this week for easy testing
+  //Next week items will be picked up by walking over them and as such there will need to be an addItem function
   constructor(x, y) {
       this.x = x;
       this.y = y;
