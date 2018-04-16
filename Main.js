@@ -9,6 +9,8 @@
 import Bullet9mm from './Weapons/Bullet9mm.js'
 import Util from './Utilities/Util.js';
 import World from './World/World.js';
+import Cursor from './Cursor.js';
+
 
 // Create the canvas
 let canvas = document.createElement("canvas");
@@ -18,6 +20,9 @@ canvas.height = window.innerHeight;
 document.body.appendChild(canvas);
 
 let world = new World(canvas);
+
+//create crosshair
+let cursor = new Cursor();
 
 // Handle controls
 let keysPressed = {};
@@ -176,6 +181,7 @@ let render = () => {
             ctx.strokeText(world.enemies.length + " Enemies Left", canvas.width/2 + 350, 50);
         }
 	}
+	ctx.drawImage(cursor.image, mouse[0] - cursor.image.width/2, mouse[1] - cursor.image.height/2);
 };
 
 // The main game loop
