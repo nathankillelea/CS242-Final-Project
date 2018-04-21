@@ -1,5 +1,6 @@
 import Pistol from '../Weapons/Pistol.js'
 import Sniper from '../Weapons/Sniper.js'
+import AssaultRifle from '../Weapons/AssaultRifle.js'
 import Util from '../Utilities/Util.js';
 
 class Player {
@@ -18,7 +19,8 @@ class Player {
       this.loadImage();
       let start_pistol = new Pistol();
       let start_sniper = new Sniper();
-      this.inventory = [start_pistol, start_sniper];
+      let start_rifle = new AssaultRifle();
+      this.inventory = [start_pistol, start_sniper, start_rifle];
       this.active_index = 0;
   }
 

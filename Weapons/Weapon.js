@@ -9,6 +9,7 @@ class Weapon {
       //this.automatic = automatic;
       //this.bullet = bullet;
       this.name = '';
+      this.cooldown = 0;
   }
 }
 export default Weapon;

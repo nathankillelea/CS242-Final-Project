@@ -6,7 +6,9 @@ import ProjectileEnemy from "../Enemies/ProjectileEnemy";
 import Cursor from '../Cursor.js';
 import Pistol from "../Weapons/Pistol";
 import Sniper from "../Weapons/Sniper";
+import AssaultRifle from '../Weapons/AssaultRifle'
 import Bullet50cal from "../Weapons/Bullet50cal";
+import Bullet556 from "../Weapons/Bullet556";
 import Bullet9mm from "../Weapons/Bullet9mm";
 
 class Game {
@@ -59,15 +61,26 @@ class Game {
 
                 //Fire the correct bullet type for the currently equipped weapon.
                 //This could be done more gracefully in the future
-                if(wep instanceof Pistol)
+                if(wep instanceof Pistol){
+                  if(wep.cooldown <= 0){
                     this.world.bullets.push(new Bullet9mm(this.world.player.x + this.world.player.width/2, this.world.player.y, mouse[0]+this.world.camera.x, mouse[1]+this.world.camera.y));
-                else if(wep instanceof Sniper)
+                    wep.cooldown+=100;
+                  }
+                }
+                else if(wep instanceof Sniper){
+                  if(wep.cooldown <= 0){
                     this.world.bullets.push(new Bullet50cal(this.world.player.x + this.world.player.width/2, this.world.player.y, mouse[0]+this.world.camera.x, mouse[1]+this.world.camera.y));
+                    wep.cooldown+=900;
+                  }
+                }
+                else if(wep instanceof AssaultRifle){
+                  if(wep.cooldown <= 0){
+                    this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, mouse[0]+this.world.camera.x, mouse[1]+this.world.camera.y));
+                    wep.cooldown+=25;
+                  }
+                }
                 //The bounding box in this if statement tells if the mouse was clicked inside the try again button,
                 //and if so the this.world is restarted.
-                if(this.world.player.health < 0) {
-
-                }
             }
             //These controls change the active weapon with simple 1,2,3,etc controls for inventory
             if (this.controller.isKeyPressed(49)) { // Player pressed 1
@@ -75,6 +88,9 @@ class Game {
             }
             if (this.controller.isKeyPressed(50)) { // Player pressed 2
                 this.world.player.active_index = 1;
+            }
+            if (this.controller.isKeyPressed(51)) { // Player pressed 3
+                this.world.player.active_index = 2;
             }
             for(let i = this.world.bullets.length - 1; i >= 0; i--) {
                 this.world.bullets[i].move(modifier, this.world.environmentObjects, this.world.enemies);
@@ -108,7 +124,13 @@ class Game {
             if(this.world.enemies[i].health <= 0)
                 this.world.enemies.splice(i, 1);
         }
-
+        //Update weapon cooldowns
+        for (let i = this.world.player.inventory.length - 1; i >= 0; i--) {
+          let wep = this.world.player.inventory[i];
+          if(wep.cooldown > 0){
+            wep.cooldown -=5;
+          }
+        }
         for(let i = this.world.enemyProjectiles.length - 1; i >= 0; i--) {
             this.world.enemyProjectiles[i].move(modifier, this.world.environmentObjects, this.world.player);
             if(this.world.enemyProjectiles[i].live === false) {
