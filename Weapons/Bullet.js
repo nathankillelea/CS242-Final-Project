@@ -9,7 +9,7 @@ class Bullet{
         this.destX = destX;
         this.destY = destY;
         this.live = true;
-        this.isPenetrating = true;
+        this.isPenetrating = penetrates;
         let diffX = this.destX - this.x;
         let diffY = this.destY - this.y;
         //This logic finds a coefficient for X and Y that can be applied

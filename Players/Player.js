@@ -1,5 +1,7 @@
 import Pistol from '../Weapons/Pistol.js'
 import Sniper from '../Weapons/Sniper.js'
+import Util from '../Utilities/Util.js';
+
 class Player {
   //this.x = x position
   //this.y = y position
@@ -20,16 +22,24 @@ class Player {
       this.active_index = 0;
   }
 
-    loadImage() {
-        this.isImageLoaded = false;
-        this.image = new Image();
-        this.image.onload = () => {
-            this.isImageLoaded = true;
-            this.width = this.image.width;
-            this.height = this.image.height;
-        };
-        this.image.src = "Graphics/Player.png";
-    }
+    isCollisionWithEnvironmentObject(environmentObjects) {
+        for (let i = 0; i < environmentObjects.length; i++) {
+            if (Util.isCollision(environmentObjects[i], this) && environmentObjects[i].isBlocking)
+                return true;
+        }
+        return false;
+    };
+
+  loadImage() {
+      this.isImageLoaded = false;
+      this.image = new Image();
+      this.image.onload = () => {
+          this.isImageLoaded = true;
+          this.width = this.image.width;
+          this.height = this.image.height;
+      };
+      this.image.src = "Graphics/Player.png";
+  }
     //Still not used yet, should be moved to each weapon or something
     /*shoot() {
       this.shootCooldown += 10;
