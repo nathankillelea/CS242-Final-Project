@@ -8,9 +8,8 @@ import ProjectileEnemy from "../Enemies/ProjectileEnemy";
 import MiniBoss from '../Enemies/MiniBoss';
 import Player from "../Players/Player";
 import Camera from "../Players/Camera";
-import GroundWeapon from "../GroundWeapons/GroundWeapon.js";
-import GroundAssaultRifle from "../GroundWeapons/GroundAssaultRifle.js";
-import GroundSniper from "../GroundWeapons/GroundSniper.js";
+import GroundAssaultRifle from "../Graphics/GroundAssaultRifle.js";
+import GroundSniper from "../Graphics/GroundSniper.js";
 import Util from "../Utilities/Util";
 
 /**

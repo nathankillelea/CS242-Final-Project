@@ -1,6 +1,6 @@
-1. Refactor Main into a Game class
+1. Refactor Main into a Game class + add pause
 2. Mini map
-3. Randomly generate objects/populate map (maybe not enough, maybe add more or something unique??)
-4. Rotate player towards cursor, enemies towards player
-5. Final boss (unique attacks/charge) + more enemies
-6. Sound effects? or let alec finish them/get em good
+3. Randomly generate objects/populate map and added gun sounds
+4. Final boss (unique attacks/charge)
+
+COMMENT GAME + CONTROLLER, refactor game update?

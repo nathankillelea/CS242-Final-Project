@@ -1,5 +1,12 @@
+/**
+ *
+ */
 class Controller {
 
+    /**
+     *
+     * @param documentBody
+     */
     constructor(documentBody) {
         this.keysPressed = [];
         this.mouse = [0, 0];
@@ -27,14 +34,27 @@ class Controller {
         });
     }
 
+    /**
+     *
+     * @param key
+     * @returns {*}
+     */
     isKeyPressed(key) {
         return this.keysPressed[key];
     }
 
+    /**
+     *
+     * @returns {boolean}
+     */
     isMousePressed() {
         return this.mousePressed;
     }
 
+    /**
+     *
+     * @returns {number[]}
+     */
     getMousePosition() {
         return this.mouse;
     }
