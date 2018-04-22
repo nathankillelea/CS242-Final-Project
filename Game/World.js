@@ -8,6 +8,9 @@ import ProjectileEnemy from "../Enemies/ProjectileEnemy";
 import MiniBoss from '../Enemies/MiniBoss';
 import Player from "../Players/Player";
 import Camera from "../Players/Camera";
+import GroundWeapon from "../GroundWeapons/GroundWeapon.js";
+import GroundAssaultRifle from "../GroundWeapons/GroundAssaultRifle.js";
+import GroundSniper from "../GroundWeapons/GroundSniper.js";
 import Util from "../Utilities/Util";
 
 /**
@@ -34,6 +37,7 @@ class World {
         this.enemies = [];
         this.bullets = [];
         this.enemyProjectiles = [];
+        this.groundWeapons = [];
         this.initializeEnvironment();
         this.player = new Player(canvas.width/2, canvas.height/2);
         this.camera = new Camera(0, 0, canvas.width, canvas.height, 10000, 5625);
@@ -49,6 +53,8 @@ class World {
         let crateCap = 20;
         let bushCap = 30;
         let rockCap = 30;
+        let sniperCap = 3;
+        let assaultRifleCap = 5;
 
         for(let i = 0; i < crateCap; i++)
             this.environmentObjects.push(new Crate(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
@@ -56,6 +62,10 @@ class World {
             this.environmentObjects.push(new Bush(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
         for(let i = 0; i < rockCap; i++)
             this.environmentObjects.push(new Rock(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < sniperCap; i++)
+                this.groundWeapons.push(new GroundSniper(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < assaultRifleCap; i++)
+                this.groundWeapons.push(new GroundAssaultRifle(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
 
         let collisionFlag = true;
         while(collisionFlag === true) {
@@ -64,6 +74,16 @@ class World {
                 collisionFlag = false;
             else
                 this.environmentObjects[i].setPosition(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375));
+        }
+        //Now we check if the weapons are hitting eachother
+        let selfCollisionFlag = true;
+        while(selfCollisionFlag){
+          let i = Util.areAnyCollisionsInSameArray(this.groundWeapons);
+          if(i === -1)
+            selfCollisionFlag = false;
+          else {
+            this.groundWeapons[i].setPosition(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375));
+          }
         }
     }
 

@@ -10,7 +10,6 @@ class Weapon {
         this.name = '';
         this.cooldown = 0;
     }
-
     loadShootSound(url) {
         this.isSoundLoaded = false;
         this.sound = new Audio();
@@ -19,6 +18,7 @@ class Weapon {
         };
         this.sound.src = url;
     }
+
 }
 
 export default Weapon;

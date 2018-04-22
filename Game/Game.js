@@ -13,6 +13,9 @@ import Bullet9mm from "../Weapons/Bullet9mm";
 import Rock from '../EnvironmentObjects/Rock';
 import Crate from '../EnvironmentObjects/Crate';
 import Bush from '../EnvironmentObjects/Bush';
+import GroundWeapon from "../GroundWeapons/GroundWeapon.js";
+import GroundAssaultRifle from "../GroundWeapons/GroundAssaultRifle.js";
+import GroundSniper from "../GroundWeapons/GroundSniper.js";
 
 class Game {
 
@@ -69,7 +72,7 @@ class Game {
                         this.world.bullets.push(new Bullet9mm(this.world.player.x + this.world.player.width/2, this.world.player.y, mouse[0]+this.world.camera.x, mouse[1]+this.world.camera.y));
                         wep.sound.play();
                         wep.sound.currentTime = 0;
-                        wep.cooldown+=200;
+                        wep.cooldown+=300;
                     }
                 }
                 else if(wep instanceof Sniper) {
@@ -77,7 +80,7 @@ class Game {
                         this.world.bullets.push(new Bullet50cal(this.world.player.x + this.world.player.width/2, this.world.player.y, mouse[0]+this.world.camera.x, mouse[1]+this.world.camera.y));
                         wep.sound.play();
                         wep.sound.currentTime = 0;
-                        wep.cooldown+=900;
+                        wep.cooldown+=1200;
                     }
                 }
                 else if(wep instanceof AssaultRifle) {
@@ -85,7 +88,7 @@ class Game {
                         this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, mouse[0]+this.world.camera.x, mouse[1]+this.world.camera.y));
                         wep.sound.play();
                         wep.sound.currentTime = 0;
-                        wep.cooldown+=25;
+                        wep.cooldown+=100;
                     }
                 }
                 //The bounding box in this if statement tells if the mouse was clicked inside the try again button,
@@ -192,7 +195,11 @@ class Game {
                     this.world.environmentObjects[i].draw(this.ctx, this.world.camera);
                 }
             }
-
+            for(let i = 0; i < this.world.groundWeapons.length; i++) {
+                if(this.world.groundWeapons[i].isImageLoaded) {
+                    this.world.groundWeapons[i].draw(this.ctx, this.world.camera);
+                }
+            }
             for(let i = 0; i < this.world.bullets.length; i++) {
                 if(this.world.bullets[i].isImageLoaded && this.world.bullets[i].live) {
                     this.world.bullets[i].draw(this.ctx, this.world.camera);
