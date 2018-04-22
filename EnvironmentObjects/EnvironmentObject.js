@@ -18,6 +18,16 @@ class EnvironmentObject {
     }
 
     /**
+     * This function sets the position of the environment object given x and y.
+     * @param x The x position to be set.
+     * @param y The y position to be set.
+     */
+    setPosition(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
      * The loadImage function takes in a url and loads it as an Image. Once the image is loaded, this.isImageLoaded is
      * set to true. The height and width of the EnvironmentObject are set to the height and width of the image.
      * @param url The url that should be loaded.

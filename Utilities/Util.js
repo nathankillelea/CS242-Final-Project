@@ -45,6 +45,18 @@ class Util {
         return -1;
     }
 
+    static areAnyCollisionsInSameArray(array) {
+        for(let i = 0; i < array.length; i++) {
+            for(let j = 0; j < array.length; j++) {
+                if(i !== j) {
+                    if(this.isCollision(array[i], array[j]))
+                        return i;
+                }
+            }
+        }
+        return -1;
+    }
+
     /**
      * This function returns a random number in the given interval.
      * @param from

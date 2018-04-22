@@ -42,12 +42,13 @@ class Player {
       };
       this.image.src = "Graphics/Player.png";
   }
-    //Still not used yet, should be moved to each weapon or something
-    /*shoot() {
-      this.shootCooldown += 10;
-    }*/
-    draw(ctx, camera) {
+
+    draw(ctx, camera, mouse) {
+        //ctx.save();
+        //ctx.translate((this.x + this.width/2) - camera.x, (this.y + this.height/2) - camera.y);
+        //ctx.rotate(Math.atan2(mouse[1] - (this.y - camera.y), mouse[0] - (this.x - camera.x)));
         ctx.drawImage(this.image, this.x - camera.x, this.y - camera.y);
+        //ctx.restore();
     }
 }
 

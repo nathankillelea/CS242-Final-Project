@@ -30,15 +30,15 @@ class World {
      * @param canvas The canvas.
      */
     start(canvas) {
+        this.environmentObjects = [];
+        this.enemies = [];
+        this.bullets = [];
+        this.enemyProjectiles = [];
+        this.initializeEnvironment();
         this.player = new Player(canvas.width/2, canvas.height/2);
         this.camera = new Camera(0, 0, canvas.width, canvas.height, 10000, 5625);
         this.camera.follow(this.player, canvas.width/2, canvas.height/2);
-        this.enemies = [];
-        this.environmentObjects = [];
-        this.bullets = [];
-        this.enemyProjectiles = [];
         this.wave = 1;
-        this.initializeEnvironment();
         this.startWave();
     }
 
@@ -46,11 +46,25 @@ class World {
      * This function initializes the environment by pushing environment objects onto the environmentObjects array.
      */
     initializeEnvironment() {
-        this.environmentObjects.push(new Crate(200, 400));
-        this.environmentObjects.push(new Bush(20, 100));
-        this.environmentObjects.push(new Rock(900, 20));
-        this.environmentObjects.push(new Rock(9500, 20));
-        this.environmentObjects.push(new Rock(20, 5250));
+        let crateCap = 20;
+        let bushCap = 30;
+        let rockCap = 30;
+
+        for(let i = 0; i < crateCap; i++)
+            this.environmentObjects.push(new Crate(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < bushCap; i++)
+            this.environmentObjects.push(new Bush(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < rockCap; i++)
+            this.environmentObjects.push(new Rock(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+
+        let collisionFlag = true;
+        while(collisionFlag === true) {
+            let i = Util.areAnyCollisionsInSameArray(this.environmentObjects);
+            if(i === -1)
+                collisionFlag = false;
+            else
+                this.environmentObjects[i].setPosition(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375));
+        }
     }
 
     /**
@@ -93,6 +107,8 @@ class World {
         this.background = new Image();
         this.background.onload = () => {
             this.isBackgroundLoaded = true;
+            this.width = this.background.width;
+            this.height = this.background.height;
         };
         this.background.src = "Graphics/Background.png";
     }

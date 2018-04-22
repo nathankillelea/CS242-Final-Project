@@ -2,10 +2,13 @@
 //in main.js' event handler for clicks
 //In the future it will control fire rate and the ammo capacity.
 import Weapon from './Weapon.js';
+
 class Pistol extends Weapon{
-  constructor(){
-    super(15, 90);
-    this.name = "Pistol";
-  }
+    constructor(){
+        super(15, 90);
+        this.name = "Pistol";
+        super.loadShootSound('Audio/PistolShot.mp3');
+    }
 }
+
 export default Pistol;
