@@ -18,14 +18,14 @@ import GroundAssaultRifle from "../Graphics/GroundAssaultRifle.js";
 import GroundSniper from "../Graphics/GroundSniper.js";
 
 /**
- *
+ * The Game class is used to store the game state. It also allows for the game to be updated or drawn.
  */
 class Game {
 
     /**
-     *
-     * @param canvas
-     * @param documentBody
+     * The constructor initializes the fields of the Game class. The gameState is set to 'Playing' initially.
+     * @param canvas The canvas.
+     * @param documentBody The body of the document.
      */
     constructor(canvas, documentBody) {
         this.canvas = canvas;
@@ -37,8 +37,10 @@ class Game {
     }
 
     /**
-     *
-     * @param modifier
+     * This function updates the game. If the gameState is 'Playing,' everything in the world is checked and updated.
+     * If the gameState is 'Paused,' everything in the world remains still until the resume button is pressed. If the
+     * gameState is 'Game Over,' everything in the world remains still until the Try Again button is pressed.
+     * @param modifier The modifier to be used for movement.
      */
     update(modifier) {
         if(this.gameState === 'Playing') {
@@ -182,7 +184,9 @@ class Game {
     }
 
     /**
-     *
+     * This function draws everything in the world. If the gameState is 'Game Over,' a game over message is displayed,
+     * if the gameState is 'Paused,' a pause message is displayed, and if the gameState is 'Playing,' all of the objects
+     * in the world are drawn, along with the HUD, MiniMap, and cursor.
      */
     draw() {
         if(this.gameState === 'Game Over') {
@@ -211,7 +215,7 @@ class Game {
     }
 
     /**
-     *
+     * This function draws a MiniMap that displays the player's location, enemy locations, and environment object locations.
      */
     drawMiniMap() {
         this.ctx.fillStyle = 'rgba(35, 177, 77, 0.2)';
@@ -255,7 +259,8 @@ class Game {
     }
 
     /**
-     *
+     * This function draws the HUD which contains the player's health, the wave number, and the number of enemies left.
+     * The current selected weapon is also displayed.
      */
     drawHUD() {
         this.ctx.font = "48px sans-serif";
@@ -286,7 +291,7 @@ class Game {
     }
 
     /**
-     *
+     * This function draws the game over screen and a button to try again.
      */
     drawGameOver() {
         this.ctx.font = "128px sans-serif";
@@ -305,6 +310,9 @@ class Game {
         this.ctx.fillText("Try again?", this.canvas.width/2 - 100 + 100, this.canvas.height/2 + 25 + 50);
     }
 
+    /**
+     * This function draws the pause screen and a resume button.
+     */
     drawPauseScreen() {
         this.ctx.font = "128px sans-serif";
         this.ctx.textAlign = "center";
@@ -323,7 +331,7 @@ class Game {
     }
 
     /**
-     *
+     * This function draws all of the enemies in the world.
      */
     drawEnemies() {
         for(let i = 0; i < this.world.enemies.length; i++) {
@@ -334,7 +342,7 @@ class Game {
     }
 
     /**
-     *
+     * This function draws all of the environment objects in the world.
      */
     drawEnvironmentObjects() {
         for(let i = 0; i < this.world.environmentObjects.length; i++) {
@@ -345,7 +353,7 @@ class Game {
     }
 
     /**
-     *
+     * This function draws all of the weapons in the world.
      */
     drawWeapons() {
         for(let i = 0; i < this.world.groundWeapons.length; i++) {
@@ -356,7 +364,7 @@ class Game {
     }
 
     /**
-     *
+     * This function draws all of the live bullets in the world.
      */
     drawBullets() {
         for(let i = 0; i < this.world.bullets.length; i++) {
@@ -367,7 +375,7 @@ class Game {
     }
 
     /**
-     *
+     * This function draws all of the live enemy projectiles in the world.
      */
     drawEnemyProjectiles() {
         for(let i = 0; i < this.world.enemyProjectiles.length; i++) {

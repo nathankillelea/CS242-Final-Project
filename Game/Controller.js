@@ -1,11 +1,12 @@
 /**
- *
+ * The Controller class listens for user inputs and stores what is being pressed.
  */
 class Controller {
 
     /**
-     *
-     * @param documentBody
+     * The constructor initializes the fields of the Controller. It also adds event listeners for keydown, keyup, mousemove,
+     * mousedown, and mouseup.
+     * @param documentBody The body of the document.
      */
     constructor(documentBody) {
         this.keysPressed = [];
@@ -35,25 +36,25 @@ class Controller {
     }
 
     /**
-     *
-     * @param key
-     * @returns {*}
+     * This function returns if the inputted key is being pressed.
+     * @param key The key to check.
+     * @returns {boolean} Whether the key is being pressed.
      */
     isKeyPressed(key) {
         return this.keysPressed[key];
     }
 
     /**
-     *
-     * @returns {boolean}
+     * This function checks if the mouse is being pressed.
+     * @returns {boolean} Whether the mouse is pressed.
      */
     isMousePressed() {
         return this.mousePressed;
     }
 
     /**
-     *
-     * @returns {number[]}
+     * This function returns the mouse position.
+     * @returns {number[]} The x and y position of the mouse as an array. ([x,y])
      */
     getMousePosition() {
         return this.mouse;
