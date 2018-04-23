@@ -1,8 +1,6 @@
-1. Mini map
-2. Improved hit detection
-3. Randomly generate objects
-4. Improve visuals
-5. Rotate player towards cursor, enemies towards player
-6. Improved enemy pathing/AI
-7. Final boss + more enemies
-8. Sound effects
+1. Improved hit detection
+2. Improve visuals
+3. Rotate player towards cursor, enemies towards player
+4. Improved enemy pathing/AI
+5. More enemies
+6. More Sound effects

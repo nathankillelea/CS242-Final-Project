@@ -118,10 +118,10 @@ describe('Enemies', () => {
     });
     describe('FinalBoss Enemy', () => {
         describe('Creation', () => {
-            it('should have 128 velocity, 5000 health, 75 damage, and give 10000 points on kill', () => {
+            it('should have 128 velocity, 5000 health, 50 damage, and give 10000 points on kill', () => {
                 assert.equal(finalboss.velocity, 128);
                 assert.equal(finalboss.health, 5000);
-                assert.equal(finalboss.damage, 75);
+                assert.equal(finalboss.damage, 50);
                 assert.equal(finalboss.pointsOnKill, 10000);
             })
         });
@@ -135,24 +135,24 @@ describe('Enemies', () => {
             })
         });
         describe('Rapid Fire', () => {
-            it('should have 100 shootCooldownReset and 1 shootCooldownRate initially, 50 shootCooldownReset and .25 shootCooldownRate after start rapid fire is called, ' +
+            it('should have 100 shootCooldownReset and 1 shootCooldownRate initially, 100 shootCooldownReset and 25 shootCooldownRate after start rapid fire is called, ' +
                 'and 100 shootCooldownReset and 1 shootCooldownRate after end rapid fire is called', () => {
                 assert.equal(finalboss.shootCooldownReset, 100);
                 assert.equal(finalboss.shootCooldownRate, 1);
                 finalboss.startRapidFire();
-                assert.equal(finalboss.shootCooldownReset, 50);
-                assert.equal(finalboss.shootCooldownRate, .25);
+                assert.equal(finalboss.shootCooldownReset, 100);
+                assert.equal(finalboss.shootCooldownRate, 25);
                 finalboss.endRapidFire();
                 assert.equal(finalboss.shootCooldownReset, 100);
                 assert.equal(finalboss.shootCooldownRate, 1);
             })
         });
         describe('Attack', () => {
-            it('should remove 75 health from the player', () => {
+            it('should remove 50 health from the player', () => {
                 let player = new Player();
                 assert.equal(player.health, 100);
                 finalboss.attack(player);
-                assert.equal(player.health, 25);
+                assert.equal(player.health, 50);
             })
         })
     })

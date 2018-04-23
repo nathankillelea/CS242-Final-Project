@@ -2,6 +2,7 @@ import World from './World.js';
 import Controller from './Controller.js';
 import EnemyProjectile from "../Enemies/EnemyProjectile";
 import MiniBoss from "../Enemies/MiniBoss";
+import FinalBoss from "../Enemies/FinalBoss";
 import ProjectileEnemy from "../Enemies/ProjectileEnemy";
 import Cursor from '../Cursor.js';
 import Pistol from "../Weapons/Pistol";
@@ -17,6 +18,7 @@ import GroundWeapon from "../PickUps/GroundWeapon.js";
 import GroundAssaultRifle from "../PickUps/GroundAssaultRifle.js";
 import GroundSniper from "../PickUps/GroundSniper.js";
 import Shotgun from "../Weapons/Shotgun";
+import Util from '../Utilities/Util.js';
 
 /**
  * The Game class is used to store the game state. It also allows for the game to be updated or drawn.
@@ -107,19 +109,11 @@ class Game {
                         this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
                         wep.sound.play();
                         wep.sound.currentTime = 0;
-                        wep.cooldown+= .1;
-                    }
-                }
-                else if(wep instanceof AssaultRifle) {
-                    if(wep.cooldown <= 0){
-                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
-                        wep.sound.play();
-                        wep.sound.currentTime = 0;
-                        wep.cooldown+=100;
+                        wep.cooldown += .1;
                     }
                 }
                 else if(wep instanceof Shotgun) {
-                    if(wep.cooldown <= 0){
+                    if(wep.cooldown <= 0) {
                         this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
                         this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+25, this.controller.mouse[1]+this.world.camera.y+25));
                         this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+50, this.controller.mouse[1]+this.world.camera.y+50));
@@ -127,7 +121,7 @@ class Game {
                         this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x-50, this.controller.mouse[1]+this.world.camera.y-50));
                         wep.sound.play();
                         wep.sound.currentTime = 0;
-                        wep.cooldown+=.75;
+                        wep.cooldown += .75;
                     }
                 }
             }
@@ -154,7 +148,34 @@ class Game {
                 this.world.enemies[i].move(this.world.player, modifier, this.world.environmentObjects);
                 if(this.world.enemies[i].attackCooldown > 0)
                     this.world.enemies[i].attackCooldown -= 5;
-                if(this.world.enemies[i] instanceof ProjectileEnemy || this.world.enemies[i] instanceof MiniBoss) {
+                if(this.world.enemies[i] instanceof FinalBoss) {
+                    if(this.world.enemies[i].rapidFireCooldown > 0 && !this.world.enemies[i].isRapidFire)
+                        this.world.enemies[i].rapidFireCooldown -= this.world.enemies[i].rapidFireCooldownRate;
+                    else if(this.world.enemies[i].rapidFireCooldown <= 0 && !this.world.enemies[i].isRapidFire) {
+                        this.world.enemies[i].startRapidFire();
+                        this.world.enemies[i].rapidFireLength = this.world.enemies[i].rapidFireLengthReset;
+                    }
+                    if(this.world.enemies[i].rapidFireLength > 0 && this.world.enemies[i].isRapidFire)
+                        this.world.enemies[i].rapidFireLength -= this.world.enemies[i].rapidFireCooldownRate;
+                    else if(this.world.enemies[i].rapidFireLength <= 0 && this.world.enemies[i].isRapidFire) {
+                        this.world.enemies[i].endRapidFire();
+                        this.world.enemies[i].rapidFireCooldown = this.world.enemies[i].rapidFireCooldownReset;
+                    }
+
+                    if(this.world.enemies[i].chargeAttackCooldown > 0 && !this.world.enemies[i].isChargeAttack)
+                        this.world.enemies[i].chargeAttackCooldown -= this.world.enemies[i].chargeAttackCooldownRate;
+                    else if(this.world.enemies[i].chargeAttackCooldown <= 0 && !this.world.enemies[i].isChargeAttack) {
+                        this.world.enemies[i].startChargeAttack();
+                        this.world.enemies[i].chargeAttackLength = this.world.enemies[i].chargeAttackLengthReset;
+                    }
+                    if(this.world.enemies[i].chargeAttackLength > 0 && this.world.enemies[i].isChargeAttack)
+                        this.world.enemies[i].chargeAttackLength -= this.world.enemies[i].chargeAttackCooldownRate;
+                    else if(this.world.enemies[i].chargeAttackLength <= 0 && this.world.enemies[i].isChargeAttack) {
+                        this.world.enemies[i].endChargeAttack();
+                        this.world.enemies[i].chargeAttackCooldown = this.world.enemies[i].chargeAttackCooldownReset;
+                    }
+                }
+                if(this.world.enemies[i] instanceof ProjectileEnemy || this.world.enemies[i] instanceof MiniBoss || this.world.enemies[i] instanceof FinalBoss) {
                     if(this.world.enemies[i].shootCooldown > 0)
                         this.world.enemies[i].shootCooldown -= this.world.enemies[i].shootCooldownRate;
                     else {
@@ -180,8 +201,16 @@ class Game {
             }
             for(let i = this.world.environmentObjects.length - 1; i >= 0; i--) {
                 if(this.world.environmentObjects[i].health <= 0) {
-                    this.world.environmentObjects.splice(i, 1);
                     this.world.environmentObjects[i].sound.play();
+                    this.world.environmentObjects.splice(i, 1);
+                }
+            }
+            for(let i = this.world.pickUps.length - 1; i >= 0; i--) {
+                if(Util.isCollision(this.world.player, this.world.pickUps[i])) {
+                    if(this.world.player.health < 100) {
+                        this.world.player.health = 100;
+                        this.world.pickUps.splice(i, 1);
+                    }
                 }
             }
             if(this.world.enemies.length === 0) {

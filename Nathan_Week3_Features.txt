@@ -1,7 +1,4 @@
-1. Refactor Main into a Game class and add Pause option
-2. Add a MiniMap that displays player, enemy, and environment object locations
-3. Randomly generate objects and pick ups around map and added health packs to heal the player
-4. Add a Final Boss enemy
-
-Refactor game update?
-ADD TESTS !!!!!!!!!!!!!!!!!!!!!!!!!-----------------!!!!!!!!!!!!---------------!!!!!!----!!!--!
+1. Refactor Main into a Game class and add a pause option
+2. Add a minimap that displays player, enemy, and environment object locations
+3. Randomly generate objects and pick ups around the map and added health packs to heal the player
+4. Add a final boss enemy with unique attack moves
