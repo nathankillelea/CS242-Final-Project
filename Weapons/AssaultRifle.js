@@ -7,5 +7,4 @@ class AssaultRifle extends Weapon{
         super.loadShootSound('Audio/RifleShot.mp3');
     }
 }
-
 export default AssaultRifle;

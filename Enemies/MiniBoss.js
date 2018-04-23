@@ -17,6 +17,7 @@ class MiniBoss extends Enemy {
         this.shootCooldown = 200;
         this.shootCooldownRate = 1;
         this.shootCooldownReset = 200;
+        this.shootAmount = 5;
         super.loadImage("Graphics/MiniBoss.png");
     }
 }

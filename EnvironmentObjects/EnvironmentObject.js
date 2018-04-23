@@ -42,6 +42,14 @@ class EnvironmentObject {
         };
         this.image.src = url;
     }
+    loadSound(url) {
+        this.isSoundLoaded = false;
+        this.sound = new Audio();
+        this.sound.onload = () => {
+            this.isSoundLoaded = true;
+        };
+        this.sound.src = url;
+    }
 
     /**
      * The draw function draws the image on the canvas at the x and y position of the EnvironmentObject.

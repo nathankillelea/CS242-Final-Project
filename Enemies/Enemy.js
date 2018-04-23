@@ -110,6 +110,7 @@ class Enemy {
         if(Util.isCollision(this, player) && this.attackCooldown === 0) {
             console.log("health before attack" + player.health);
             this.attack(player);
+            player.damageTakenSound.play();
             console.log("health after attack" + player.health);
         }
     }

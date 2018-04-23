@@ -14,6 +14,7 @@ class Crate extends EnvironmentObject {
     constructor(x, y) {
         super(x, y, 100, true);
         super.loadImage("Graphics/Crate.png");
+        super.loadSound('Audio/BoxBreak.mp3');
     }
 }
 

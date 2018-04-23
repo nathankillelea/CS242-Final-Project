@@ -1,5 +1,6 @@
 import Pistol from '../Weapons/Pistol.js'
 import Sniper from '../Weapons/Sniper.js'
+import Shotgun from '../Weapons/Shotgun.js'
 import AssaultRifle from '../Weapons/AssaultRifle.js'
 import Util from '../Utilities/Util.js';
 
@@ -17,10 +18,12 @@ class Player {
       this.health = 100;
       this.speed = 256;
       this.loadImage();
+      this.loadDamageTakenSound('Audio/DamageTaken.mp3');
       let start_pistol = new Pistol();
       let start_sniper = new Sniper();
       let start_rifle = new AssaultRifle();
-      this.inventory = [start_pistol, start_sniper, start_rifle];
+      let start_shotgun = new Shotgun();
+      this.inventory = [start_pistol, start_sniper, start_rifle, start_shotgun];
       this.active_index = 0;
   }
 
@@ -41,6 +44,14 @@ class Player {
           this.height = this.image.height;
       };
       this.image.src = "Graphics/Player.png";
+  }
+  loadDamageTakenSound(url) {
+      this.isSound1Loaded = false;
+      this.damageTakenSound = new Audio();
+      this.damageTakenSound.onload = () => {
+          this.isSound1Loaded = true;
+      };
+      this.damageTakenSound.src = url;
   }
 
     draw(ctx, camera, mouse) {
