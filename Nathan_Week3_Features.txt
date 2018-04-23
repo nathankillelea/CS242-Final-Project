@@ -1,6 +1,7 @@
 1. Refactor Main into a Game class and add Pause option
 2. Add a MiniMap that displays player, enemy, and environment object locations
-3. Randomly generate objects/populate map and added gun sounds (maybe add more, weapons spawn from crates or something else?)
-4. Final boss (unique attacks/charge) or something else
+3. Randomly generate objects and pick ups around map and added health packs to heal the player
+4. Add a Final Boss enemy
 
-COMMENT GAME + CONTROLLER, refactor game update?
+Refactor game update?
+ADD TESTS !!!!!!!!!!!!!!!!!!!!!!!!!-----------------!!!!!!!!!!!!---------------!!!!!!----!!!--!

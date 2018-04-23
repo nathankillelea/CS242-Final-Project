@@ -2,6 +2,7 @@ let jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const { window } = (new JSDOM(''));
 global.Image = window.Image;
+global.Audio = window.Audio;
 
 import RegularEnemy from '../Enemies/RegularEnemy.js';
 import LightEnemy from '../Enemies/LightEnemy.js';
@@ -13,6 +14,7 @@ import Bush from '../EnvironmentObjects/Bush.js';
 import Rock from '../EnvironmentObjects/Rock.js';
 import ProjectileEnemy from '../Enemies/ProjectileEnemy.js';
 import MiniBoss from '../Enemies/MiniBoss.js';
+import FinalBoss from '../Enemies/FinalBoss.js';
 
 let assert = require('assert');
 
@@ -22,6 +24,8 @@ describe('Enemies', () => {
     let tank = new TankEnemy(800, 100);
     let projectileEnemy = new ProjectileEnemy(1000, 1000);
     let miniboss = new MiniBoss(5000, 5000);
+    let finalboss = new FinalBoss(10000, 10000);
+    
     describe('Light Enemy', () => {
         describe('Creation', () => {
             it('should have 128 velocity, 10 health, 10 damage, and give 50 points on kill', () => {
@@ -109,6 +113,46 @@ describe('Enemies', () => {
                 assert.equal(player.health, 100);
                 miniboss.attack(player);
                 assert.equal(player.health, 50);
+            })
+        })
+    });
+    describe('FinalBoss Enemy', () => {
+        describe('Creation', () => {
+            it('should have 128 velocity, 5000 health, 75 damage, and give 10000 points on kill', () => {
+                assert.equal(finalboss.velocity, 128);
+                assert.equal(finalboss.health, 5000);
+                assert.equal(finalboss.damage, 75);
+                assert.equal(finalboss.pointsOnKill, 10000);
+            })
+        });
+        describe('Charge Attack', () => {
+            it('should have 128 velocity initially, 1024 velocity after start charge attack is called, and 128 velocity when end charge attack is called', () => {
+                assert.equal(finalboss.velocity, 128);
+                finalboss.startChargeAttack();
+                assert.equal(finalboss.velocity, 1024);
+                finalboss.endChargeAttack();
+                assert.equal(finalboss.velocity, 128);
+            })
+        });
+        describe('Rapid Fire', () => {
+            it('should have 100 shootCooldownReset and 1 shootCooldownRate initially, 50 shootCooldownReset and .25 shootCooldownRate after start rapid fire is called, ' +
+                'and 100 shootCooldownReset and 1 shootCooldownRate after end rapid fire is called', () => {
+                assert.equal(finalboss.shootCooldownReset, 100);
+                assert.equal(finalboss.shootCooldownRate, 1);
+                finalboss.startRapidFire();
+                assert.equal(finalboss.shootCooldownReset, 50);
+                assert.equal(finalboss.shootCooldownRate, .25);
+                finalboss.endRapidFire();
+                assert.equal(finalboss.shootCooldownReset, 100);
+                assert.equal(finalboss.shootCooldownRate, 1);
+            })
+        });
+        describe('Attack', () => {
+            it('should remove 75 health from the player', () => {
+                let player = new Player();
+                assert.equal(player.health, 100);
+                finalboss.attack(player);
+                assert.equal(player.health, 25);
             })
         })
     })

@@ -13,9 +13,9 @@ import Bullet9mm from "../Weapons/Bullet9mm";
 import Rock from '../EnvironmentObjects/Rock';
 import Crate from '../EnvironmentObjects/Crate';
 import Bush from '../EnvironmentObjects/Bush';
-import GroundWeapon from "../Graphics/GroundWeapon.js";
-import GroundAssaultRifle from "../Graphics/GroundAssaultRifle.js";
-import GroundSniper from "../Graphics/GroundSniper.js";
+import GroundWeapon from "../PickUps/GroundWeapon.js";
+import GroundAssaultRifle from "../PickUps/GroundAssaultRifle.js";
+import GroundSniper from "../PickUps/GroundSniper.js";
 
 /**
  * The Game class is used to store the game state. It also allows for the game to be updated or drawn.
@@ -204,6 +204,7 @@ class Game {
             this.drawWeapons();
             this.drawBullets();
             this.drawEnemyProjectiles();
+            this.drawPickUps();
 
             if(this.world.player.isImageLoaded) {
                 this.world.player.draw(this.ctx, this.world.camera, this.controller.mouse);
@@ -381,6 +382,17 @@ class Game {
         for(let i = 0; i < this.world.enemyProjectiles.length; i++) {
             if(this.world.enemyProjectiles[i].isImageLoaded && this.world.enemyProjectiles[i].live) {
                 this.world.enemyProjectiles[i].draw(this.ctx, this.world.camera);
+            }
+        }
+    }
+
+    /**
+     * This function draws all of the pick ups in the world.
+     */
+    drawPickUps() {
+        for(let i = 0; i < this.world.pickUps.length; i++) {
+            if(this.world.pickUps[i].isImageLoaded) {
+                this.world.pickUps[i].draw(this.ctx, this.world.camera);
             }
         }
     }
