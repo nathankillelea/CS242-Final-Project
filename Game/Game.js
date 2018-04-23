@@ -6,26 +6,27 @@ import ProjectileEnemy from "../Enemies/ProjectileEnemy";
 import Cursor from '../Cursor.js';
 import Pistol from "../Weapons/Pistol";
 import Sniper from "../Weapons/Sniper";
-import AssaultRifle from '../Weapons/AssaultRifle'
+import Shotgun from "../Weapons/Shotgun";
+import AssaultRifle from '../Weapons/AssaultRifle';
 import Bullet50cal from "../Weapons/Bullet50cal";
 import Bullet556 from "../Weapons/Bullet556";
 import Bullet9mm from "../Weapons/Bullet9mm";
 import Rock from '../EnvironmentObjects/Rock';
 import Crate from '../EnvironmentObjects/Crate';
 import Bush from '../EnvironmentObjects/Bush';
-import GroundWeapon from "../PickUps/GroundWeapon.js";
-import GroundAssaultRifle from "../PickUps/GroundAssaultRifle.js";
-import GroundSniper from "../PickUps/GroundSniper.js";
-
+import GroundWeapon from "../Graphics/GroundWeapon.js";
+import GroundAssaultRifle from "../Graphics/GroundAssaultRifle.js";
+import GroundSniper from "../Graphics/GroundSniper.js";
+import Util from "../Utilities/Util";
 /**
- * The Game class is used to store the game state. It also allows for the game to be updated or drawn.
+ *
  */
 class Game {
 
     /**
-     * The constructor initializes the fields of the Game class. The gameState is set to 'Playing' initially.
-     * @param canvas The canvas.
-     * @param documentBody The body of the document.
+     *
+     * @param canvas
+     * @param documentBody
      */
     constructor(canvas, documentBody) {
         this.canvas = canvas;
@@ -37,10 +38,8 @@ class Game {
     }
 
     /**
-     * This function updates the game. If the gameState is 'Playing,' everything in the world is checked and updated.
-     * If the gameState is 'Paused,' everything in the world remains still until the resume button is pressed. If the
-     * gameState is 'Game Over,' everything in the world remains still until the Try Again button is pressed.
-     * @param modifier The modifier to be used for movement.
+     *
+     * @param modifier
      */
     update(modifier) {
         if(this.gameState === 'Playing') {
@@ -90,7 +89,7 @@ class Game {
                         this.world.bullets.push(new Bullet9mm(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
                         wep.sound.play();
                         wep.sound.currentTime = 0;
-                        wep.cooldown+=300;
+                        wep.cooldown+= .5;
                     }
                 }
                 else if(wep instanceof Sniper) {
@@ -98,7 +97,7 @@ class Game {
                         this.world.bullets.push(new Bullet50cal(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
                         wep.sound.play();
                         wep.sound.currentTime = 0;
-                        wep.cooldown+=1200;
+                        wep.cooldown+=1;
                     }
                 }
                 else if(wep instanceof AssaultRifle) {
@@ -106,7 +105,19 @@ class Game {
                         this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
                         wep.sound.play();
                         wep.sound.currentTime = 0;
-                        wep.cooldown+=100;
+                        wep.cooldown+= .1;
+                    }
+                }
+                else if(wep instanceof Shotgun) {
+                    if(wep.cooldown <= 0){
+                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
+                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+25, this.controller.mouse[1]+this.world.camera.y+25));
+                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+50, this.controller.mouse[1]+this.world.camera.y+50));
+                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x-25, this.controller.mouse[1]+this.world.camera.y-25));
+                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x-50, this.controller.mouse[1]+this.world.camera.y-50));
+                        wep.sound.play();
+                        wep.sound.currentTime = 0;
+                        wep.cooldown+=.75;
                     }
                 }
             }
@@ -119,6 +130,9 @@ class Game {
             }
             if (this.controller.isKeyPressed(51)) { // Player pressed 3
                 this.world.player.active_index = 2;
+            }
+            if (this.controller.isKeyPressed(52)) { // Player pressed 4
+                this.world.player.active_index = 3;
             }
             for(let i = this.world.bullets.length - 1; i >= 0; i--) {
                 this.world.bullets[i].move(modifier, this.world.environmentObjects, this.world.enemies);
@@ -145,18 +159,23 @@ class Game {
             for (let i = this.world.player.inventory.length - 1; i >= 0; i--) {
                 let wep = this.world.player.inventory[i];
                 if(wep.cooldown > 0){
-                    wep.cooldown -=5;
+                    wep.cooldown -= modifier;
+                    console.log(wep.cooldown);
                 }
             }
             for(let i = this.world.enemyProjectiles.length - 1; i >= 0; i--) {
-                this.world.enemyProjectiles[i].move(modifier, this.world.environmentObjects, this.world.player);
-                if(this.world.enemyProjectiles[i].live === false) {
-                    this.world.enemyProjectiles.splice(i, 1);
-                }
+              this.world.enemyProjectiles[i].move(modifier, this.world.environmentObjects, this.world.player);
+              if(this.world.enemyProjectiles[i].live === false) {
+                  this.world.enemyProjectiles.splice(i, 1);
+              }
             }
             for(let i = this.world.environmentObjects.length - 1; i >= 0; i--) {
-                if(this.world.environmentObjects[i].health <= 0)
-                    this.world.environmentObjects.splice(i, 1);
+              if(this.world.environmentObjects[i].health <= 0){
+                if(this.world.environmentObjects[i] instanceof Crate){
+                  this.world.environmentObjects[i].sound.play();
+                }
+                this.world.environmentObjects.splice(i, 1);
+              }
             }
             if(this.world.enemies.length === 0) {
                 this.world.wave += 1;
@@ -184,9 +203,7 @@ class Game {
     }
 
     /**
-     * This function draws everything in the world. If the gameState is 'Game Over,' a game over message is displayed,
-     * if the gameState is 'Paused,' a pause message is displayed, and if the gameState is 'Playing,' all of the objects
-     * in the world are drawn, along with the HUD, MiniMap, and cursor.
+     *
      */
     draw() {
         if(this.gameState === 'Game Over') {
@@ -199,24 +216,23 @@ class Game {
             if(this.world.isBackgroundLoaded)
                 this.world.drawBackground(this.ctx, this.canvas);
 
-            this.drawWeapons();
-            this.drawPickUps();
-
-            if(this.world.player.isImageLoaded)
-                this.world.player.draw(this.ctx, this.world.camera, this.controller.mouse);
-
             this.drawEnemies();
-            this.drawEnemyProjectiles();
-            this.drawBullets();
             this.drawEnvironmentObjects();
-            this.drawMiniMap();
-            this.drawHUD();
+            this.drawWeapons();
+            this.drawBullets();
+            this.drawEnemyProjectiles();
+
+            if(this.world.player.isImageLoaded) {
+                this.world.player.draw(this.ctx, this.world.camera, this.controller.mouse);
+                this.drawHUD();
+                this.drawMiniMap();
+            }
         }
         this.ctx.drawImage(this.cursor.image, this.controller.mouse[0] - this.cursor.image.width/2, this.controller.mouse[1] - this.cursor.image.height/2);
     }
 
     /**
-     * This function draws a MiniMap that displays the player's location, enemy locations, and environment object locations.
+     *
      */
     drawMiniMap() {
         this.ctx.fillStyle = 'rgba(35, 177, 77, 0.2)';
@@ -260,8 +276,7 @@ class Game {
     }
 
     /**
-     * This function draws the HUD which contains the player's health, the wave number, and the number of enemies left.
-     * The current selected weapon is also displayed.
+     *
      */
     drawHUD() {
         this.ctx.font = "48px sans-serif";
@@ -292,7 +307,7 @@ class Game {
     }
 
     /**
-     * This function draws the game over screen and a button to try again.
+     *
      */
     drawGameOver() {
         this.ctx.font = "128px sans-serif";
@@ -311,9 +326,6 @@ class Game {
         this.ctx.fillText("Try again?", this.canvas.width/2 - 100 + 100, this.canvas.height/2 + 25 + 50);
     }
 
-    /**
-     * This function draws the pause screen and a resume button.
-     */
     drawPauseScreen() {
         this.ctx.font = "128px sans-serif";
         this.ctx.textAlign = "center";
@@ -332,7 +344,7 @@ class Game {
     }
 
     /**
-     * This function draws all of the enemies in the world.
+     *
      */
     drawEnemies() {
         for(let i = 0; i < this.world.enemies.length; i++) {
@@ -343,7 +355,7 @@ class Game {
     }
 
     /**
-     * This function draws all of the environment objects in the world.
+     *
      */
     drawEnvironmentObjects() {
         for(let i = 0; i < this.world.environmentObjects.length; i++) {
@@ -354,7 +366,7 @@ class Game {
     }
 
     /**
-     * This function draws all of the weapons in the world.
+     *
      */
     drawWeapons() {
         for(let i = 0; i < this.world.groundWeapons.length; i++) {
@@ -365,7 +377,7 @@ class Game {
     }
 
     /**
-     * This function draws all of the live bullets in the world.
+     *
      */
     drawBullets() {
         for(let i = 0; i < this.world.bullets.length; i++) {
@@ -376,23 +388,12 @@ class Game {
     }
 
     /**
-     * This function draws all of the live enemy projectiles in the world.
+     *
      */
     drawEnemyProjectiles() {
         for(let i = 0; i < this.world.enemyProjectiles.length; i++) {
             if(this.world.enemyProjectiles[i].isImageLoaded && this.world.enemyProjectiles[i].live) {
                 this.world.enemyProjectiles[i].draw(this.ctx, this.world.camera);
-            }
-        }
-    }
-
-    /**
-     * This function draws all of the pick ups in the world.
-     */
-    drawPickUps() {
-        for(let i = 0; i < this.world.pickUps.length; i++) {
-            if(this.world.pickUps[i].isImageLoaded) {
-                this.world.pickUps[i].draw(this.ctx, this.world.camera);
             }
         }
     }
