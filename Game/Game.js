@@ -13,13 +13,6 @@ import Bullet50cal from "../Weapons/Bullet50cal";
 import Bullet556 from "../Weapons/Bullet556";
 import Bullet12Gauge from "../Weapons/Bullet12Gauge";
 import Bullet9mm from "../Weapons/Bullet9mm";
-import Rock from '../EnvironmentObjects/Rock';
-import Crate from '../EnvironmentObjects/Crate';
-import Bush from '../EnvironmentObjects/Bush';
-import GroundWeapon from "../PickUps/GroundWeapon.js";
-import GroundAssaultRifle from "../PickUps/GroundAssaultRifle.js";
-import GroundSniper from "../PickUps/GroundSniper.js";
-import GroundShotgun from "../PickUps/GroundShotgun.js";
 import Util from '../Utilities/Util.js';
 
 /**
@@ -331,15 +324,15 @@ class Game {
         this.ctx.fillStyle = 'rgba(35, 177, 77, 0.2)';
         this.ctx.strokeStyle = "#000";
         this.ctx.lineWidth = 3;
-        this.ctx.fillRect(this.canvas.width - 425, 25, 400, 225);
-        this.ctx.strokeRect(this.canvas.width - 425, 25, 400, 225);
+        this.ctx.fillRect(25, this.canvas.height - 250, 400, 225);
+        this.ctx.strokeRect(25, this.canvas.height - 250, 400, 225);
         let xPercent = (this.world.player.x + this.world.player.width/2) / this.world.width;
         let yPercent = (this.world.player.y + this.world.player.height/2) / this.world.height;
         let xRelative = xPercent*400;
         let yRelative = yPercent*225;
         this.ctx.fillStyle = '#00FF00';
         this.ctx.beginPath();
-        this.ctx.arc((this.canvas.width - 425) + xRelative, 25 + yRelative, 2.5, 0, 2*Math.PI);
+        this.ctx.arc(25 + xRelative, (this.canvas.height - 250) + yRelative, 2.5, 0, 2*Math.PI);
         this.ctx.fill();
         for(let i = 0; i < this.world.environmentObjects.length; i++) {
             if(this.world.environmentObjects[i].isImageLoaded) {
@@ -347,10 +340,9 @@ class Game {
                 let yPercent = (this.world.environmentObjects[i].y + this.world.environmentObjects[i].height/2) / this.world.height;
                 let xRelative = xPercent*400;
                 let yRelative = yPercent*225;
-                //ctx.drawImage(this.world.environmentObjects[i].image, (this.canvas.width - 425) + xRelative + this.world.environmentObjects[i].width/2, 25 + yRelative + this.world.environmentObjects[i].height/2, this.world.environmentObjects[i].width/25, this.world.environmentObjects[i].height/25);
                 this.ctx.fillStyle = '#808080';
                 this.ctx.beginPath();
-                this.ctx.arc((this.canvas.width - 425) + xRelative, 25 + yRelative, 2.5, 0, 2*Math.PI);
+                this.ctx.arc(25 + xRelative, (this.canvas.height - 250) + yRelative, 2.5, 0, 2*Math.PI);
                 this.ctx.fill();
             }
         }
@@ -362,7 +354,7 @@ class Game {
                 let yRelative = yPercent*225;
                 this.ctx.fillStyle = '#FF0000';
                 this.ctx.beginPath();
-                this.ctx.arc((this.canvas.width - 425) + xRelative, 25 + yRelative, 2.5, 0, 2*Math.PI);
+                this.ctx.arc(25 + xRelative, (this.canvas.height - 250) + yRelative, 2.5, 0, 2*Math.PI);
                 this.ctx.fill();
             }
         }

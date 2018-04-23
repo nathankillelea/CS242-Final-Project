@@ -55,6 +55,7 @@ class EnemyProjectile {
      */
     damagePlayer(player) {
         player.health -= this.damage;
+        player.damageTakenSound.play();
     }
 
     /**

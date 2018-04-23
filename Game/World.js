@@ -88,9 +88,8 @@ class World {
              this.groundWeapons.push(new GroundSniper(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
          for(let i = 0; i < assaultRifleCap; i++)
              this.groundWeapons.push(new GroundAssaultRifle(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
-         for(let i = 0; i < shotgunCap; i++){
+         for(let i = 0; i < shotgunCap; i++)
              this.groundWeapons.push(new GroundShotgun(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
-         }
          for(let i = 0; i < healthPackCap; i++)
              this.pickUps.push(new HealthPack(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
 

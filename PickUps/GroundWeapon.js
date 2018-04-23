@@ -23,7 +23,7 @@ class GroundWeapon {
     }
     /**
     array = the array that the wepaon object stored in this GroundWeapon will be pushed into. This method is to be used with a player's inventory.
-    *//
+    */
     addWeapon(array){
       array.push(this.weapon);
     }
