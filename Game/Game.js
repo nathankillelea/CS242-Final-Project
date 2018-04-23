@@ -57,7 +57,7 @@ class Game {
             if (this.controller.isKeyPressed(87)) { // Player holding up
                 //Only move up if we are not at the very top of the world
                 if(this.world.player.y >= 0) {
-                    //If the player is sprinting he must move twice as fast, and his stamina must drain based on the modifier (seconds since last update)
+                    //If the player is sprinting he must move twice as fast
                     if(sprinting){
                       this.world.player.y -= this.world.player.speed*modifier*2;
                     }
@@ -134,11 +134,11 @@ class Game {
                     }
                 }
             }
+            //This block is entered if the user is holding click.
+            //It checks the type of weapon the player has equipped and fires the correct bullets.
+            //Shotgun is unique in that it fires 5 bullets with a spread which is done by adding/subtracting a constant from the destination.
             if(this.controller.isMousePressed()) {
                 let wep = this.world.player.inventory[this.world.player.active_index];
-
-                //Fire the correct bullet type for the currently equipped weapon.
-                //This could be done more gracefully in the future
                 if(wep.cooldown <= 0){
                   wep.sound.play();
                   wep.sound.currentTime = 0;
