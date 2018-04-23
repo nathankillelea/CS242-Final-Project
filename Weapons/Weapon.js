@@ -4,11 +4,12 @@
 //The name field is used for the HUD displaying the active weapon.
 class Weapon {
 
-    constructor(clipSize, maxAmmo) {
+    constructor(clipSize, maxAmmo, maxCoolDown) {
         this.clipSize = clipSize;
         this.maxAmmo = maxAmmo;
         this.name = '';
         this.cooldown = 0;
+        this.maxCoolDown = maxCoolDown;
     }
     loadShootSound(url) {
         this.isSoundLoaded = false;
@@ -17,6 +18,9 @@ class Weapon {
             this.isSoundLoaded = true;
         };
         this.sound.src = url;
+    }
+    addCooldown(){
+      this.cooldown += this.maxCoolDown;
     }
 
 }

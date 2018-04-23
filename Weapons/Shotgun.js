@@ -2,9 +2,9 @@ import Weapon from './Weapon.js';
 
 class Shotgun extends Weapon{
     constructor(){
-        super(8, 32);
+        super(8, 32, .75);
         this.name = "Shotgun";
-        super.loadShootSound('Audio/SniperShot.mp3');
+        super.loadShootSound('Audio/ShotgunShot.mp3');
     }
 }
 

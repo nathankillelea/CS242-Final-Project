@@ -5,7 +5,7 @@ import Weapon from './Weapon.js';
 
 class Sniper extends Weapon{
     constructor(){
-        super(5, 30);
+        super(5, 30, 1.75);
         this.name = "Sniper";
         super.loadShootSound('Audio/SniperShot.mp3');
     }

@@ -6,7 +6,7 @@ import Util from '../Utilities/Util.js';
 //damage during each frame as it penetrates the object or enemy
 class Bullet556 extends Bullet {
     constructor(x, y, destX, destY) {
-        super(1500, 12, x, y, destX, destY, false);
+        super(2000, 12, x, y, destX, destY, false);
         super.loadImage("Graphics/bullet3.png");
     }
 }

@@ -7,9 +7,11 @@ import ProjectileEnemy from "../Enemies/ProjectileEnemy";
 import Cursor from '../Cursor.js';
 import Pistol from "../Weapons/Pistol";
 import Sniper from "../Weapons/Sniper";
+import Shotgun from "../Weapons/Shotgun";
 import AssaultRifle from '../Weapons/AssaultRifle'
 import Bullet50cal from "../Weapons/Bullet50cal";
 import Bullet556 from "../Weapons/Bullet556";
+import Bullet12Gauge from "../Weapons/Bullet12Gauge";
 import Bullet9mm from "../Weapons/Bullet9mm";
 import Rock from '../EnvironmentObjects/Rock';
 import Crate from '../EnvironmentObjects/Crate';
@@ -17,7 +19,7 @@ import Bush from '../EnvironmentObjects/Bush';
 import GroundWeapon from "../PickUps/GroundWeapon.js";
 import GroundAssaultRifle from "../PickUps/GroundAssaultRifle.js";
 import GroundSniper from "../PickUps/GroundSniper.js";
-import Shotgun from "../Weapons/Shotgun";
+import GroundShotgun from "../PickUps/GroundShotgun.js";
 import Util from '../Utilities/Util.js';
 
 /**
@@ -88,41 +90,26 @@ class Game {
 
                 //Fire the correct bullet type for the currently equipped weapon.
                 //This could be done more gracefully in the future
-                if(wep instanceof Pistol) {
-                    if(wep.cooldown <= 0){
-                        this.world.bullets.push(new Bullet9mm(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
-                        wep.sound.play();
-                        wep.sound.currentTime = 0;
-                        wep.cooldown+= .5;
-                    }
-                }
-                else if(wep instanceof Sniper) {
-                    if(wep.cooldown <= 0) {
-                        this.world.bullets.push(new Bullet50cal(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
-                        wep.sound.play();
-                        wep.sound.currentTime = 0;
-                        wep.cooldown+=1;
-                    }
-                }
-                else if(wep instanceof AssaultRifle) {
-                    if(wep.cooldown <= 0){
-                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
-                        wep.sound.play();
-                        wep.sound.currentTime = 0;
-                        wep.cooldown += .1;
-                    }
-                }
-                else if(wep instanceof Shotgun) {
-                    if(wep.cooldown <= 0) {
-                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
-                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+25, this.controller.mouse[1]+this.world.camera.y+25));
-                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+50, this.controller.mouse[1]+this.world.camera.y+50));
-                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x-25, this.controller.mouse[1]+this.world.camera.y-25));
-                        this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x-50, this.controller.mouse[1]+this.world.camera.y-50));
-                        wep.sound.play();
-                        wep.sound.currentTime = 0;
-                        wep.cooldown += .75;
-                    }
+                if(wep.cooldown <= 0){
+                  wep.sound.play();
+                  wep.sound.currentTime = 0;
+                  wep.addCooldown();
+                  if(wep instanceof Pistol) {
+                      this.world.bullets.push(new Bullet9mm(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
+                  }
+                  else if(wep instanceof Sniper) {
+                      this.world.bullets.push(new Bullet50cal(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
+                  }
+                  else if(wep instanceof AssaultRifle) {
+                      this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
+                  }
+                  else if(wep instanceof Shotgun) {
+                      this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
+                      this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+25, this.controller.mouse[1]+this.world.camera.y+25));
+                      this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+50, this.controller.mouse[1]+this.world.camera.y+50));
+                      this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x-25, this.controller.mouse[1]+this.world.camera.y-25));
+                      this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x-50, this.controller.mouse[1]+this.world.camera.y-50));
+                  }
                 }
             }
             //These controls change the active weapon with simple 1,2,3,etc controls for inventory
@@ -130,12 +117,15 @@ class Game {
                 this.world.player.active_index = 0;
             }
             if (this.controller.isKeyPressed(50)) { // Player pressed 2
+              if(this.world.player.inventory.length > 1)
                 this.world.player.active_index = 1;
             }
             if (this.controller.isKeyPressed(51)) { // Player pressed 3
+              if(this.world.player.inventory.length > 2)
                 this.world.player.active_index = 2;
             }
             if (this.controller.isKeyPressed(52)) { // Player pressed 4
+              if(this.world.player.inventory.length > 3)
                 this.world.player.active_index = 3;
             }
             for(let i = this.world.bullets.length - 1; i >= 0; i--) {
@@ -185,6 +175,21 @@ class Game {
                 }
                 if(this.world.enemies[i].health <= 0)
                     this.world.enemies.splice(i, 1);
+            }
+            //check for weapon pickUps
+            for (let i = this.world.groundWeapons.length - 1; i >= 0; i--){
+              if(Util.isCollision(this.world.player, this.world.groundWeapons[i])){
+                let ownsWep = false;
+                for(let j = this.world.player.inventory.length - 1; j >= 0; j--){
+                  if(this.world.player.inventory[j].name === this.world.groundWeapons[i].weapon.name){
+                    ownsWep = true;
+                  }
+                }
+                if(ownsWep == false){
+                  this.world.groundWeapons[i].addWeapon(this.world.player.inventory);
+                  this.world.groundWeapons.splice(i, 1);
+                }
+              }
             }
             //Update weapon cooldowns
             for (let i = this.world.player.inventory.length - 1; i >= 0; i--) {

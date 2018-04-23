@@ -19,6 +19,9 @@ class GroundWeapon {
         };
         this.image.src = url;
     }
+    addWeapon(array){
+      array.push(this.weapon);
+    }
     draw(ctx, camera) {
         ctx.drawImage(this.image, this.x - camera.x, this.y - camera.y);
     }

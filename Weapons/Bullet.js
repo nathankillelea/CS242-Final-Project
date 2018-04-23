@@ -12,6 +12,7 @@ class Bullet{
         this.isPenetrating = penetrates;
         let diffX = this.destX - this.x;
         let diffY = this.destY - this.y;
+        this.liveTime = 0;
         //This logic finds a coefficient for X and Y that can be applied
         //to the move function in order to move the bullet in a straight line
         //directly to its destination.
@@ -44,10 +45,15 @@ class Bullet{
     move(modifier, environmentObjects, enemies){
         this.x += this.velocity*modifier*this.coeffX;
         this.y += this.velocity*modifier*this.coeffY;
+        this.liveTime += modifier;
+        console.log(this.liveTime);
         if(this.hitSomething(environmentObjects, enemies) && this.isPenetrating == false) {
             this.live = false;
         }
         if(this.x < 0 || this.x > 10000 || this.y < 0 || this.y > 5625) {
+            this.live = false;
+        }
+        if(this.liveTime > .5 && this.isPenetrating == false){
             this.live = false;
         }
 
