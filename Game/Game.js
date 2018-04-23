@@ -199,18 +199,18 @@ class Game {
             if(this.world.isBackgroundLoaded)
                 this.world.drawBackground(this.ctx, this.canvas);
 
-            this.drawEnemies();
-            this.drawEnvironmentObjects();
             this.drawWeapons();
-            this.drawBullets();
-            this.drawEnemyProjectiles();
             this.drawPickUps();
 
-            if(this.world.player.isImageLoaded) {
+            if(this.world.player.isImageLoaded)
                 this.world.player.draw(this.ctx, this.world.camera, this.controller.mouse);
-                this.drawHUD();
-                this.drawMiniMap();
-            }
+
+            this.drawEnemies();
+            this.drawEnemyProjectiles();
+            this.drawBullets();
+            this.drawEnvironmentObjects();
+            this.drawMiniMap();
+            this.drawHUD();
         }
         this.ctx.drawImage(this.cursor.image, this.controller.mouse[0] - this.cursor.image.width/2, this.controller.mouse[1] - this.cursor.image.height/2);
     }

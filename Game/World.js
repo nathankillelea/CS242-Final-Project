@@ -6,6 +6,7 @@ import RegularEnemy from "../Enemies/RegularEnemy";
 import LightEnemy from "../Enemies/LightEnemy";
 import ProjectileEnemy from "../Enemies/ProjectileEnemy";
 import MiniBoss from '../Enemies/MiniBoss';
+import FinalBoss from '../Enemies/FinalBoss';
 import Player from "../Players/Player";
 import Camera from "../Players/Camera";
 import GroundAssaultRifle from "../PickUps/GroundAssaultRifle.js";
@@ -117,16 +118,21 @@ class World {
         let projectileEnemyCap = Math.floor(this.wave/2)*5;
         let miniBossCap = Math.floor(this.wave/5);
 
-        for(let i = 0; i < lightEnemyCap; i++)
-            this.enemies.push(new LightEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
-        for(let i = 0; i < regularEnemyCap; i++)
-            this.enemies.push(new RegularEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
-        for(let i = 0; i < tankEnemyCap; i++)
-            this.enemies.push(new TankEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
-        for(let i = 0; i < projectileEnemyCap; i++)
-            this.enemies.push(new ProjectileEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
-        for(let i = 0; i < miniBossCap; i++)
-            this.enemies.push(new MiniBoss(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        if(this.wave === 6) {
+            this.enemies.push(new FinalBoss(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        }
+        else {
+            for(let i = 0; i < lightEnemyCap; i++)
+                this.enemies.push(new LightEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+            for(let i = 0; i < regularEnemyCap; i++)
+                this.enemies.push(new RegularEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+            for(let i = 0; i < tankEnemyCap; i++)
+                this.enemies.push(new TankEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+            for(let i = 0; i < projectileEnemyCap; i++)
+                this.enemies.push(new ProjectileEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+            for(let i = 0; i < miniBossCap; i++)
+                this.enemies.push(new MiniBoss(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        }
 
         let collisionFlag = true;
         while(collisionFlag === true) {
