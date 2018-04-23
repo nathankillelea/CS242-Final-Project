@@ -46,7 +46,7 @@ class World {
         this.player = new Player(canvas.width/2, canvas.height/2);
         this.camera = new Camera(0, 0, canvas.width, canvas.height, 10000, 5625);
         this.camera.follow(this.player, canvas.width/2, canvas.height/2);
-        this.wave = 6;
+        this.wave = 1;
         this.startWave();
     }
 

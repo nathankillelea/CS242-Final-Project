@@ -48,40 +48,89 @@ class Game {
      * @param modifier The modifier to be used for movement.
      */
     update(modifier) {
+        let sprinting = this.controller.isKeyPressed(16);
         if(this.gameState === 'Playing') {
             if(this.world.player.health <= 0)
                 this.gameState = 'Game Over';
             else if(this.controller.isKeyPressed(27))
                 this.gameState = 'Paused';
             if (this.controller.isKeyPressed(87)) { // Player holding up
+                //Only move up if we are not at the very top of the world
                 if(this.world.player.y >= 0) {
-                    this.world.player.y -= this.world.player.speed * modifier;
+                    //If the player is sprinting he must move twice as fast, and his stamina must drain based on the modifier (seconds since last update)
+                    if(sprinting){
+                      this.world.player.y -= this.world.player.speed*modifier*2;
+                    }
+                    else{
+                      this.world.player.y -= this.world.player.speed * modifier;
+                    }
+                    //If the movement caused the player to be colliding, undo the movement and give back the stamina if he was spritning.
                     if(this.world.player.isCollisionWithEnvironmentObject(this.world.environmentObjects)) {
+                      if(sprinting){
+                        this.world.player.y += this.world.player.speed*modifier*2;
+                      }
+                      else{
                         this.world.player.y += this.world.player.speed * modifier;
+                      }
                     }
                 }
             }
             if (this.controller.isKeyPressed(83)) { // Player holding down
+                //Only move down if we are not at the very bottom of the world
                 if(this.world.player.y + this.world.player.height <= 5625) {
-                    this.world.player.y += this.world.player.speed * modifier;
+                    //If the player is sprinting he must move twice as fast, and his stamina must drain based on the modifier (seconds since last update)
+                    if(sprinting){
+                      this.world.player.y += this.world.player.speed*modifier*2;
+                    }
+                    //Otherwise move like normal
+                    else{
+                      this.world.player.y += this.world.player.speed * modifier;
+                    }
+                    //If the movement caused the player to be colliding, undo the movement and give back the stamina if he was spritning.
                     if(this.world.player.isCollisionWithEnvironmentObject(this.world.environmentObjects)) {
+                      if(sprinting){
+                        this.world.player.y -= this.world.player.speed*modifier*2;
+                      }
+                      else{
                         this.world.player.y -= this.world.player.speed * modifier;
+                      }
                     }
                 }
             }
             if (this.controller.isKeyPressed(65)) { // Player holding left
+                //only go left if we are not on the far left edge already
                 if(this.world.player.x >= 0) {
-                    this.world.player.x -= this.world.player.speed * modifier;
+                    if(sprinting){
+                      this.world.player.x -= this.world.player.speed * modifier*2;
+                    }
+                    else{
+                      this.world.player.x -= this.world.player.speed * modifier;
+                    }
                     if(this.world.player.isCollisionWithEnvironmentObject(this.world.environmentObjects)) {
-                        this.world.player.x += this.world.player.speed * modifier;
+                        if(sprinting){
+                          this.world.player.x += this.world.player.speed * modifier*2;
+                        }
+                        else{
+                          this.world.player.x += this.world.player.speed*modifier;
+                        }
                     }
                 }
             }
             if (this.controller.isKeyPressed(68)) { // Player holding right
                 if(this.world.player.x + this.world.player.width <= 10000) {
-                    this.world.player.x += this.world.player.speed * modifier;
+                    if(sprinting){
+                      this.world.player.x += this.world.player.speed * modifier*2;
+                    }
+                    else{
+                      this.world.player.x += this.world.player.speed * modifier;
+                    }
                     if(this.world.player.isCollisionWithEnvironmentObject(this.world.environmentObjects)) {
-                        this.world.player.x -= this.world.player.speed * modifier;
+                        if(sprinting){
+                          this.world.player.x -= this.world.player.speed * modifier*2;
+                        }
+                        else{
+                          this.world.player.x -= this.world.player.speed * modifier;
+                        }
                     }
                 }
             }
