@@ -1,0 +1,4 @@
+1. Scoring system with scoreboard at end of the game (enter name or something)
+2. Game balance (enemy/player/env object hitboxes, tweak damage/health numbers, OTHER STUFF?)
+3. Improved zombie pathing/movement (DONE?)
+4. Add traps/placeable items??

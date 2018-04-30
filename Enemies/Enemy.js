@@ -66,45 +66,28 @@ class Enemy {
     move(player, modifier, environmentObjects) {
         let diffX = player.x - this.x;
         let diffY = player.y - this.y;
-        let length = Math.sqrt(diffX * diffX + diffY * diffY);
-        if(length !== 0) {
-            diffX /= length;
-            diffY /= length;
+
+        let coeffX;
+        let coeffY;
+
+        if(Math.abs(diffX) > Math.abs(diffY)) {
+            coeffX = diffX / Math.abs(diffX);
+            coeffY = diffY / Math.abs(diffX);
+        }
+        else {
+            coeffY = diffY / Math.abs(diffY);
+            coeffX = diffX / Math.abs(diffY);
         }
 
-        this.angle = Math.atan2(diffY, diffX);
+        let oldX = this.x;
+        let oldY = this.y;
 
-        if(diffX > 0) {
-            if(this.x + this.width <= 10000) {
-                this.x += this.velocity*modifier;
-                if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
-                    this.x -= this.velocity*modifier;
-                }
-            }
-        }
-        else if(diffX < 0) {
-            if(this.x >= 0) {
-                this.x -= this.velocity*modifier;
-                if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
-                    this.x += this.velocity*modifier;
-                }
-            }
-        }
-        if(diffY > 0) {
-            if(this.y + this.height <= 5625) {
-                this.y += this.velocity*modifier;
-                if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
-                    this.y -= this.velocity*modifier;
-                }
-            }
-        }
-        else if(diffY < 0) {
-            if(this.y >= 0) {
-                this.y -= this.velocity*modifier;
-                if(this.isCollisionWithEnvironmentObject(environmentObjects)) {
-                    this.y += this.velocity*modifier;
-                }
-            }
+        this.x += this.velocity*modifier*coeffX;
+        this.y += this.velocity*modifier*coeffY;
+
+        if((this.x + this.width > 10000) || (this.x < 0) || (this.y + this.height > 5625) || (this.y < 0) || this.isCollisionWithEnvironmentObject(environmentObjects))  {
+            this.x = oldX;
+            this.y = oldY;
         }
 
         if(Util.isCollision(this, player) && this.attackCooldown === 0) {

@@ -56,7 +56,6 @@ class Bullet{
         if(this.liveTime > .5 && this.isPenetrating == false){
             this.live = false;
         }
-
     }
     //Checks if the bullet hit any of our objects that can be hit, if so that object loses HP
     //and the function returns true to indicate that the object was hit. If not, false is returned
