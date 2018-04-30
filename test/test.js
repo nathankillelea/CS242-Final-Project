@@ -15,6 +15,8 @@ import Rock from '../EnvironmentObjects/Rock.js';
 import ProjectileEnemy from '../Enemies/ProjectileEnemy.js';
 import MiniBoss from '../Enemies/MiniBoss.js';
 import FinalBoss from '../Enemies/FinalBoss.js';
+import ParasiteEnemy from '../Enemies/ParasiteEnemy.js';
+import ChargerEnemy from '../Enemies/ChargerEnemy.js';
 
 let assert = require('assert');
 
@@ -25,6 +27,8 @@ describe('Enemies', () => {
     let projectileEnemy = new ProjectileEnemy(1000, 1000);
     let miniboss = new MiniBoss(5000, 5000);
     let finalboss = new FinalBoss(10000, 10000);
+    let parasite = new ParasiteEnemy(50000, 50000);
+    let charger = new ChargerEnemy(700000, 600000);
     
     describe('Light Enemy', () => {
         describe('Creation', () => {
@@ -155,7 +159,52 @@ describe('Enemies', () => {
                 assert.equal(player.health, 50);
             })
         })
-    })
+    });
+    describe('Parasite Enemy', () => {
+        describe('Creation', () => {
+            it('should have 512 velocity, 1 health, 99 damage, and give 500 points on kill', () => {
+                assert.equal(parasite.velocity, 512);
+                assert.equal(parasite.health, 1);
+                assert.equal(parasite.damage, 99);
+                assert.equal(parasite.pointsOnKill, 500);
+            })
+        });
+        describe('Attack', () => {
+            it('should remove 99 health from the player', () => {
+                let player = new Player();
+                assert.equal(player.health, 100);
+                parasite.attack(player);
+                assert.equal(player.health, 1);
+            })
+        })
+    });
+    describe('Charger Enemy', () => {
+        describe('Creation', () => {
+            it('should have 256 velocity, 250 health, 25 damage, and give 500 points on kill', () => {
+                assert.equal(charger.velocity, 256);
+                assert.equal(charger.health, 250);
+                assert.equal(charger.damage, 25);
+                assert.equal(charger.pointsOnKill, 500);
+            })
+        });
+        describe('Attack', () => {
+            it('should remove 25 health from the player', () => {
+                let player = new Player();
+                assert.equal(player.health, 100);
+                charger.attack(player);
+                assert.equal(player.health, 75);
+            })
+        });
+        describe('Charge Attack', () => {
+            it('should have 256 velocity initially, 1024 velocity after start charge attack is called, and 256 velocity when end charge attack is called', () => {
+                assert.equal(charger.velocity, 256);
+                charger.startChargeAttack();
+                assert.equal(charger.velocity, 1024);
+                charger.endChargeAttack();
+                assert.equal(charger.velocity, 256);
+            })
+        });
+    });
 });
 describe('Environment Objects', () => {
     let crate = new Crate(2000, 2000);

@@ -20,6 +20,7 @@ import SpikeTrap from "../Weapons/SpikeTrap";
 import TarTrap from "../Weapons/TarTrap";
 import SpikeTrapPlaced from "../PlacedTraps/SpikeTrapPlaced";
 import TarTrapPlaced from "../PlacedTraps/TarTrapPlaced";
+import ChargerEnemy from "../Enemies/ChargerEnemy";
 
 /**
  * The Game class is used to store the game state. It also allows for the game to be updated or drawn.
@@ -346,15 +347,16 @@ class Game {
                     this.world.enemies[i].endRapidFire();
                     this.world.enemies[i].rapidFireCooldown = this.world.enemies[i].rapidFireCooldownReset;
                 }
-
+            }
+            if(this.world.enemies[i] instanceof FinalBoss || this.world.enemies[i] instanceof ChargerEnemy) {
                 if(this.world.enemies[i].chargeAttackCooldown > 0 && !this.world.enemies[i].isChargeAttack)
-                    this.world.enemies[i].chargeAttackCooldown -= this.world.enemies[i].chargeAttackCooldownRate;
+                    this.world.enemies[i].chargeAttackCooldown -= this.world.enemies[i].chargeAttackCooldownRate*modifier;
                 else if(this.world.enemies[i].chargeAttackCooldown <= 0 && !this.world.enemies[i].isChargeAttack) {
                     this.world.enemies[i].startChargeAttack();
                     this.world.enemies[i].chargeAttackLength = this.world.enemies[i].chargeAttackLengthReset;
                 }
                 if(this.world.enemies[i].chargeAttackLength > 0 && this.world.enemies[i].isChargeAttack)
-                    this.world.enemies[i].chargeAttackLength -= this.world.enemies[i].chargeAttackCooldownRate;
+                    this.world.enemies[i].chargeAttackLength -= this.world.enemies[i].chargeAttackCooldownRate*modifier;
                 else if(this.world.enemies[i].chargeAttackLength <= 0 && this.world.enemies[i].isChargeAttack) {
                     this.world.enemies[i].endChargeAttack();
                     this.world.enemies[i].chargeAttackCooldown = this.world.enemies[i].chargeAttackCooldownReset;
@@ -401,7 +403,7 @@ class Game {
                 }
                 else{
                     this.world.player.y -= this.world.player.speed * modifier;
-                    this.world.player.stamina += modifier;
+                    this.world.player.stamina += modifier/2;
                 }
                 //If the movement caused the player to be colliding, undo the movement and give back the stamina if he was spritning.
                 if(this.world.player.isCollisionWithEnvironmentObject(this.world.environmentObjects)) {
@@ -425,7 +427,7 @@ class Game {
                 //Otherwise move like normal
                 else{
                     this.world.player.y += this.world.player.speed * modifier;
-                    this.world.player.stamina += modifier;
+                    this.world.player.stamina += modifier/2;
                 }
                 //If the movement caused the player to be colliding, undo the movement and give back the stamina if he was spritning.
                 if(this.world.player.isCollisionWithEnvironmentObject(this.world.environmentObjects)) {
@@ -447,7 +449,7 @@ class Game {
                 }
                 else{
                     this.world.player.x -= this.world.player.speed * modifier;
-                    this.world.player.stamina += modifier;
+                    this.world.player.stamina += modifier/2;
                 }
                 if(this.world.player.isCollisionWithEnvironmentObject(this.world.environmentObjects)) {
                     if(sprinting){
@@ -467,7 +469,7 @@ class Game {
                 }
                 else{
                     this.world.player.x += this.world.player.speed * modifier;
-                    this.world.player.stamina += modifier;
+                    this.world.player.stamina += modifier/2;
                 }
                 if(this.world.player.isCollisionWithEnvironmentObject(this.world.environmentObjects)) {
                     if(sprinting){

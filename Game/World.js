@@ -18,6 +18,7 @@ import Util from "../Utilities/Util";
 import ParasiteEnemy from "../Enemies/ParasiteEnemy";
 import GroundSpikeTrap from "../PickUps/GroundSpikeTrap.js";
 import GroundTarTrap from '../PickUps/GroundTarTrap.js';
+import ChargerEnemy from "../Enemies/ChargerEnemy";
 
 /**
  * The World class holds the information related to the world.
@@ -136,6 +137,7 @@ class World {
         let projectileEnemyCap = Math.floor(this.wave/2)*5;
         let miniBossCap = Math.floor(this.wave/5);
         let parasiteEnemyCap = this.wave;
+        let chargerEnemyCap = this.wave*2;
 
         if(this.wave === 6) {
             this.enemies.push(new FinalBoss(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
@@ -153,6 +155,8 @@ class World {
                 this.enemies.push(new MiniBoss(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
             for(let i = 0; i < parasiteEnemyCap; i++)
                 this.enemies.push(new ParasiteEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+            for(let i = 0; i < chargerEnemyCap; i++)
+                this.enemies.push(new ChargerEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
         }
 
         let collisionFlag = true;
