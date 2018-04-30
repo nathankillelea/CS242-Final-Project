@@ -33,6 +33,9 @@ class Game {
         this.cursor = new Cursor();
         this.gameState = 'Playing';
         this.score = 0;
+        this.topScores = [0, 0, 0];
+        this.comboLength = 0;
+        this.comboEnemiesKilled = 0;
     }
 
     /**
@@ -43,10 +46,18 @@ class Game {
      */
     update(modifier) {
         if(this.gameState === 'Playing') {
-            if(this.world.player.health <= 0)
+            if(this.world.player.health <= 0) {
                 this.gameState = 'Game Over';
+                this.updateTopScores();
+            }
             else if(this.controller.isKeyPressed(27))
                 this.gameState = 'Paused';
+
+            this.comboLength -= modifier;
+            if(this.comboLength < 0) {
+                this.comboEnemiesKilled = 0;
+                this.comboLength = 0;
+            }
 
             this.updatePlayer(modifier);
             this.updateShot();
@@ -79,6 +90,7 @@ class Game {
     draw() {
         if(this.gameState === 'Game Over') {
             this.drawGameOver();
+            this.drawScoreboard();
         }
         else if(this.gameState === 'Paused') {
             this.drawPauseScreen();
@@ -169,6 +181,8 @@ class Game {
         this.ctx.strokeText('Active Weapon: ' + this.world.player.inventory[this.world.player.active_index].name, this.canvas.width/2, this.canvas.height - 50);
         this.ctx.fillText('Score: ' + this.score, this.canvas.width/2, 125);
         this.ctx.strokeText('Score: ' + this.score, this.canvas.width/2, 125);
+        this.ctx.fillText('Combo: ' + this.comboEnemiesKilled, this.canvas.width/2 + 350, 125);
+        this.ctx.strokeText('Combo: ' + this.comboEnemiesKilled, this.canvas.width/2 + 350, 125);
         // remove later - debugging purposes
         // this.ctx.font = "24px sans-serif";
         // this.ctx.fillStyle = '#FFF';
@@ -215,9 +229,43 @@ class Game {
         this.ctx.fillText("Try again?", this.canvas.width/2 - 100 + 100, this.canvas.height/2 + 25 + 50);
     }
 
-    // NEW FOR THIS WEEK
-    drawScoreboard() {
+    updateTopScores() {
+        if(this.score > this.topScores[0]) {
+            this.topScores[2] = this.topScores[1];
+            this.topScores[1] = this.topScores[0];
+            this.topScores[0] = this.score;
+        }
+        else if(this.score > this.topScores[1]) {
+            this.topScores[2] = this.topScores[1];
+            this.topScores[1] = this.score;
+        }
+        else if(this.score > this.topScores[2]) {
+            this.topScores[2] = this.score;
+        }
+    }
 
+    /**
+     * This function draws the top 3 scores.
+     */
+    drawScoreboard() {
+        this.ctx.font = "60px sans-serif";
+        this.ctx.fillStyle = '#FFF';
+        this.ctx.textAlign = "start";
+        this.ctx.fillText('High Scores', this.canvas.width/2 + 440, this.canvas.height/2 - 75);
+        this.ctx.strokeText('High Scores', this.canvas.width/2 + 440, this.canvas.height/2 - 75);
+        this.ctx.fillText('1st', this.canvas.width/2 + 400, this.canvas.height/2);
+        this.ctx.strokeText('1st', this.canvas.width/2 + 400, this.canvas.height/2);
+        this.ctx.fillText('2nd', this.canvas.width/2 + 400, this.canvas.height/2 + 75);
+        this.ctx.strokeText('2nd', this.canvas.width/2 + 400, this.canvas.height/2 + 75);
+        this.ctx.fillText('3rd', this.canvas.width/2 + 400, this.canvas.height/2 + 150);
+        this.ctx.strokeText('3rd', this.canvas.width/2 + 400, this.canvas.height/2 + 150);
+        this.ctx.textAlign = "end";
+        this.ctx.fillText('' + this.topScores[0], this.canvas.width/2 + 800, this.canvas.height/2);
+        this.ctx.strokeText('' + this.topScores[0], this.canvas.width/2 + 800, this.canvas.height/2);
+        this.ctx.fillText('' + this.topScores[1], this.canvas.width/2 + 800, this.canvas.height/2 + 75);
+        this.ctx.strokeText('' + this.topScores[1], this.canvas.width/2 + 800, this.canvas.height/2 + 75);
+        this.ctx.fillText('' + this.topScores[2], this.canvas.width/2 + 800, this.canvas.height/2 + 150);
+        this.ctx.strokeText('' + this.topScores[2], this.canvas.width/2 + 800, this.canvas.height/2 + 150);
     }
 
     /**
@@ -270,7 +318,7 @@ class Game {
      */
     updateEnemies(modifier) {
         for(let i = this.world.enemies.length - 1; i >= 0; i--) {
-            this.world.enemies[i].move(this.world.player, modifier, this.world.environmentObjects);
+            this.world.enemies[i].move(this.world.player, modifier, this.world.environmentObjects, this.world.camera);
             if(this.world.enemies[i].attackCooldown > 0)
                 this.world.enemies[i].attackCooldown -= 5;
             if(this.world.enemies[i] instanceof FinalBoss) {
@@ -309,7 +357,12 @@ class Game {
                 }
             }
             if(this.world.enemies[i].health <= 0) {
-                this.score += this.world.enemies[i].pointsOnKill;
+                this.comboEnemiesKilled += 1;
+                if(this.comboLength > 0)
+                    this.score += this.world.enemies[i].pointsOnKill*2;
+                else
+                    this.score += this.world.enemies[i].pointsOnKill;
+                this.comboLength = 3;
                 this.world.enemies.splice(i, 1);
             }
         }
@@ -489,20 +542,20 @@ class Game {
                 wep.sound.currentTime = 0;
                 wep.addCooldown();
                 if(wep instanceof Pistol) {
-                    this.world.bullets.push(new Bullet9mm(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
+                    this.world.bullets.push(new Bullet9mm(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
                 }
                 else if(wep instanceof Sniper) {
-                    this.world.bullets.push(new Bullet50cal(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
+                    this.world.bullets.push(new Bullet50cal(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
                 }
                 else if(wep instanceof AssaultRifle) {
-                    this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
+                    this.world.bullets.push(new Bullet556(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
                 }
                 else if(wep instanceof Shotgun) {
-                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
-                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+25, this.controller.mouse[1]+this.world.camera.y+25));
-                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x+50, this.controller.mouse[1]+this.world.camera.y+50));
-                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x-25, this.controller.mouse[1]+this.world.camera.y-25));
-                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y, this.controller.mouse[0]+this.world.camera.x-50, this.controller.mouse[1]+this.world.camera.y-50));
+                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x, this.controller.mouse[1]+this.world.camera.y));
+                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x+25, this.controller.mouse[1]+this.world.camera.y+25));
+                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x+50, this.controller.mouse[1]+this.world.camera.y+50));
+                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x-25, this.controller.mouse[1]+this.world.camera.y-25));
+                    this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x-50, this.controller.mouse[1]+this.world.camera.y-50));
                 }
             }
         }

@@ -23,7 +23,6 @@ class Player {
       let start_sniper = new Sniper();
       let start_rifle = new AssaultRifle();
       let start_shotgun = new Shotgun();
-      //this.inventory = [start_pistol, start_sniper, start_rifle, start_shotgun];
       this.inventory = [start_pistol];
       this.active_index = 0;
   }
@@ -46,6 +45,7 @@ class Player {
       };
       this.image.src = "Graphics/Player.png";
   }
+
   loadDamageTakenSound(url) {
       this.isSound1Loaded = false;
       this.damageTakenSound = new Audio();
@@ -56,11 +56,12 @@ class Player {
   }
 
     draw(ctx, camera, mouse) {
-        //ctx.save();
-        //ctx.translate((this.x + this.width/2) - camera.x, (this.y + this.height/2) - camera.y);
-        //ctx.rotate(Math.atan2(mouse[1] - (this.y - camera.y), mouse[0] - (this.x - camera.x)));
-        ctx.drawImage(this.image, this.x - camera.x, this.y - camera.y);
-        //ctx.restore();
+        ctx.save();
+        ctx.translate((this.x+this.width/2) - camera.x, (this.y+this.height/2) - camera.y);
+        let angle = Math.atan2(mouse[1] - (this.y+this.height/2-camera.y), mouse[0] - (this.x+this.width/2-camera.x));
+        ctx.rotate(angle+(Math.PI/2));
+        ctx.drawImage(this.image, 0-this.width/2, 0-this.height/2);
+        ctx.restore();
     }
 }
 

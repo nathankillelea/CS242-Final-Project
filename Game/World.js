@@ -14,6 +14,7 @@ import GroundSniper from "../PickUps/GroundSniper.js";
 import GroundShotgun from '../PickUps/GroundShotgun.js';
 import HealthPack from "../PickUps/Healthpack.js";
 import Util from "../Utilities/Util";
+import ParasiteEnemy from "../Enemies/ParasiteEnemy";
 
 /**
  * The World class holds the information related to the world.
@@ -54,9 +55,9 @@ class World {
      * This function initializes the environment by pushing environment objects onto the environmentObjects array.
      */
     initializeEnvironment() {
-        let crateCap = 20;
-        let bushCap = 30;
-        let rockCap = 30;
+        let crateCap = 15;
+        let bushCap = 15;
+        let rockCap = 15;
 
         for(let i = 0; i < crateCap; i++)
             this.environmentObjects.push(new Crate(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
@@ -81,8 +82,8 @@ class World {
      initializePickUps() {
          let sniperCap = 3;
          let assaultRifleCap = 5;
-         let shotgunCap = 10;
-         let healthPackCap = 10;
+         let shotgunCap = 5;
+         let healthPackCap = 7;
 
          for(let i = 0; i < sniperCap; i++)
              this.groundWeapons.push(new GroundSniper(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
@@ -121,6 +122,7 @@ class World {
         let tankEnemyCap = this.wave * 5;
         let projectileEnemyCap = Math.floor(this.wave/2)*5;
         let miniBossCap = Math.floor(this.wave/5);
+        let parasiteEnemyCap = this.wave;
 
         if(this.wave === 6) {
             this.enemies.push(new FinalBoss(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
@@ -136,6 +138,8 @@ class World {
                 this.enemies.push(new ProjectileEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
             for(let i = 0; i < miniBossCap; i++)
                 this.enemies.push(new MiniBoss(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+            for(let i = 0; i < parasiteEnemyCap; i++)
+                this.enemies.push(new ParasiteEnemy(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
         }
 
         let collisionFlag = true;

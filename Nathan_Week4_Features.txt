@@ -1,4 +1,4 @@
-1. Scoring system with scoreboard at end of the game (enter name or something)
-2. Game balance (enemy/player/env object hitboxes, tweak damage/health numbers, OTHER STUFF?)
-3. Improved zombie pathing/movement (DONE?)
-4. Add traps/placeable items??
+1. Improved enemy movement and added enemy rotation
+2. Scoring system with the top 3 highest scores displayed at game over and added combos
+3. Added placeable traps
+4. New enemies (fast + small + instakill, another lad?) and updated game visuals

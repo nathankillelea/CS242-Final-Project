@@ -63,7 +63,7 @@ class Enemy {
      * @param modifier The modifier to be multiplied by the velocity.
      * @param environmentObjects An array of environment objects.
      */
-    move(player, modifier, environmentObjects) {
+    move(player, modifier, environmentObjects, camera) {
         let diffX = player.x - this.x;
         let diffY = player.y - this.y;
 
@@ -79,9 +79,10 @@ class Enemy {
             coeffX = diffX / Math.abs(diffY);
         }
 
+        this.angle = Math.atan2(player.y+player.height/2-camera.y - (this.y + this.height/2 - camera.y), player.x+player.width/2-camera.x - (this.x + this.width/2 - camera.x));
+
         let oldX = this.x;
         let oldY = this.y;
-
         this.x += this.velocity*modifier*coeffX;
         this.y += this.velocity*modifier*coeffY;
 
@@ -132,12 +133,11 @@ class Enemy {
      * @param camera The camera object.
      */
     draw(ctx, camera) {
-        //ctx.save();
-        //ctx.translate(this.x, this.y);
-        //ctx.rotate(this.angle + Math.PI/2.0);
-        //ctx.translate(-this.x, -this.y);
-        ctx.drawImage(this.image, this.x - camera.x, this.y - camera.y);
-        //ctx.restore();
+        ctx.save();
+        ctx.translate((this.x + this.width/2) - camera.x, (this.y + this.height/2) - camera.y);
+        ctx.rotate(this.angle+(Math.PI/2));
+        ctx.drawImage(this.image, 0-this.width/2, 0-this.height/2);
+        ctx.restore();
     }
 }
 
