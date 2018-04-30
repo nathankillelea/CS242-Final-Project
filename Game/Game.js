@@ -9,10 +9,12 @@ import Pistol from "../Weapons/Pistol";
 import Sniper from "../Weapons/Sniper";
 import Shotgun from "../Weapons/Shotgun";
 import AssaultRifle from '../Weapons/AssaultRifle'
+import Flamethrower from "../Weapons/Flamethrower";
 import Bullet50cal from "../Weapons/Bullet50cal";
 import Bullet556 from "../Weapons/Bullet556";
 import Bullet12Gauge from "../Weapons/Bullet12Gauge";
 import Bullet9mm from "../Weapons/Bullet9mm";
+import BulletFire from "../Weapons/BulletFire";
 import Util from '../Utilities/Util.js';
 
 /**
@@ -557,6 +559,19 @@ class Game {
                     this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x-25, this.controller.mouse[1]+this.world.camera.y-25));
                     this.world.bullets.push(new Bullet12Gauge(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x-50, this.controller.mouse[1]+this.world.camera.y-50));
                 }
+                //the flamethrower will shoot a single ball of fire each update if possible with a slight random spread
+                //so the fire does not go in a straight line.
+                else if(wep instanceof Flamethrower) {
+                    let spread1_x = Util.randomIntFromInterval(-100, 100);
+                    let spread1_y = Util.randomIntFromInterval(-100, 100);
+                    let spread2_x = Util.randomIntFromInterval(-100, 100);
+                    let spread2_y = Util.randomIntFromInterval(-100, 100);
+                    let spread3_x = Util.randomIntFromInterval(-100, 100);
+                    let spread3_y = Util.randomIntFromInterval(-100, 10);
+                    this.world.bullets.push(new BulletFire(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x+spread1_x, this.controller.mouse[1]+this.world.camera.y+spread1_y));
+                    this.world.bullets.push(new BulletFire(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x+spread2_x, this.controller.mouse[1]+this.world.camera.y+spread2_y));
+                    this.world.bullets.push(new BulletFire(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x+spread3_x, this.controller.mouse[1]+this.world.camera.y+spread3_y));
+                }
             }
         }
     }
@@ -578,6 +593,10 @@ class Game {
         if (this.controller.isKeyPressed(52)) { // Player pressed 4
             if(this.world.player.inventory.length > 3)
                 this.world.player.active_index = 3;
+        }
+        if (this.controller.isKeyPressed(53)) { // Player pressed 5
+            if(this.world.player.inventory.length > 4)
+                this.world.player.active_index = 4;
         }
     }
 
