@@ -10,7 +10,7 @@ class TarTrap extends Weapon {
      */
     constructor() {
         super(0, 0, 0);
-        this.name = 'Spike Trap';
+        this.name = 'Tar Trap';
     }
 }
 
