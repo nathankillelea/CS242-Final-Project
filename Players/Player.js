@@ -23,6 +23,8 @@ class Player {
       let start_sniper = new Sniper();
       let start_rifle = new AssaultRifle();
       let start_shotgun = new Shotgun();
+      this.stamina = 7;
+      this.resting = false;
       this.inventory = [start_pistol];
       this.active_index = 0;
   }
