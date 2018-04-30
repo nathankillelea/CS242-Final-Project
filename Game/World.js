@@ -45,6 +45,7 @@ class World {
         this.enemyProjectiles = [];
         this.pickUps = [];
         this.groundWeapons = [];
+        this.placedTraps = [];
         this.initializeEnvironment();
         this.initializePickUps();
         this.player = new Player(canvas.width/2, canvas.height/2);

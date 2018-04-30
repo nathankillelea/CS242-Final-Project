@@ -1,7 +1,7 @@
 import Weapon from './Weapon.js';
 
 /**
- * The SpikeTrap class extends the Trap class.
+ * The SpikeTrap class extends the Weapon class.
  */
 class SpikeTrap extends Weapon {
 
@@ -11,6 +11,7 @@ class SpikeTrap extends Weapon {
     constructor() {
         super(0, 0, 0);
         this.name = 'Spike Trap';
+        super.loadShootSound('Audio/SpikeTrap.mp3');
     }
 }
 

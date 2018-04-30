@@ -42,6 +42,11 @@ class EnvironmentObject {
         };
         this.image.src = url;
     }
+
+    /**
+     * The load sound function loads the environment objects breaking sound.
+     * @param url The url that should be loaded.
+     */
     loadSound(url) {
         this.isSoundLoaded = false;
         this.sound = new Audio();

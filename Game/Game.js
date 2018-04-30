@@ -16,6 +16,10 @@ import Bullet12Gauge from "../Weapons/Bullet12Gauge";
 import Bullet9mm from "../Weapons/Bullet9mm";
 import BulletFire from "../Weapons/BulletFire";
 import Util from '../Utilities/Util.js';
+import SpikeTrap from "../Weapons/SpikeTrap";
+import TarTrap from "../Weapons/TarTrap";
+import SpikeTrapPlaced from "../PlacedTraps/SpikeTrapPlaced";
+import TarTrapPlaced from "../PlacedTraps/TarTrapPlaced";
 
 /**
  * The Game class is used to store the game state. It also allows for the game to be updated or drawn.
@@ -103,6 +107,7 @@ class Game {
 
             this.drawWeapons();
             this.drawPickUps();
+            this.drawPlacedTraps();
 
             if(this.world.player.isImageLoaded)
                 this.world.player.draw(this.ctx, this.world.camera, this.controller.mouse);
@@ -185,15 +190,17 @@ class Game {
         this.ctx.strokeText('Score: ' + this.score, this.canvas.width/2, 125);
         this.ctx.fillText('Combo: ' + this.comboEnemiesKilled, this.canvas.width/2 + 350, 125);
         this.ctx.strokeText('Combo: ' + this.comboEnemiesKilled, this.canvas.width/2 + 350, 125);
-        // remove later - debugging purposes
-        // this.ctx.font = "24px sans-serif";
-        // this.ctx.fillStyle = '#FFF';
-        // this.ctx.fillText('PosX: ' + this.world.player.x, this.canvas.width/2 - 290, 175);
-        // this.ctx.strokeText('PosY: ' + this.world.player.y, this.canvas.width/2 - 290, 250);
-        // this.ctx.fillText('CameraX: ' + this.world.camera.x, this.canvas.width/2, 175);
-        // this.ctx.strokeText('CameraY: ' + this.world.camera.y, this.canvas.width/2, 250);
-        // this.ctx.fillText('mouseX: ' + this.controller.mouse[0], this.canvas.width/2 + 350, 175);
-        // this.ctx.strokeText('mouseY: ' + this.controller.mouse[1], this.canvas.width/2 + 350, 250);
+    }
+
+    /**
+     * This function draws all of the placed traps in the world.
+     */
+    drawPlacedTraps() {
+        for(let i = 0; i < this.world.placedTraps.length; i++) {
+            if(this.world.placedTraps[i].isImageLoaded) {
+                this.world.placedTraps[i].draw(this.ctx, this.world.camera);
+            }
+        }
     }
 
     /**
@@ -231,6 +238,9 @@ class Game {
         this.ctx.fillText("Try again?", this.canvas.width/2 - 100 + 100, this.canvas.height/2 + 25 + 50);
     }
 
+    /**
+     * This function updates the top scores based on the current score.
+     */
     updateTopScores() {
         if(this.score > this.topScores[0]) {
             this.topScores[2] = this.topScores[1];
@@ -320,7 +330,7 @@ class Game {
      */
     updateEnemies(modifier) {
         for(let i = this.world.enemies.length - 1; i >= 0; i--) {
-            this.world.enemies[i].move(this.world.player, modifier, this.world.environmentObjects, this.world.camera);
+            this.world.enemies[i].move(this.world.player, modifier, this.world.environmentObjects, this.world.placedTraps, this.world.camera);
             if(this.world.enemies[i].attackCooldown > 0)
                 this.world.enemies[i].attackCooldown -= 5;
             if(this.world.enemies[i] instanceof FinalBoss) {
@@ -535,6 +545,7 @@ class Game {
      * This function adds new bullets to the world depending on if the player pressed their mouse button and what weapon
      * was equipped. It checks the type of weapon the player has equipped and fires the correct bullets. Shotgun is unique
      * in that it fires 5 bullets with a spread which is done by adding/subtracting a constant from the destination.
+     * If a trap is currently equipped, it is placed at the mouse position and removed from the player's inventory.
      */
     updateShot() {
         if(this.controller.isMousePressed()) {
@@ -572,6 +583,16 @@ class Game {
                     this.world.bullets.push(new BulletFire(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x+spread2_x, this.controller.mouse[1]+this.world.camera.y+spread2_y));
                     this.world.bullets.push(new BulletFire(this.world.player.x + this.world.player.width/2, this.world.player.y + this.world.player.height/2, this.controller.mouse[0]+this.world.camera.x+spread3_x, this.controller.mouse[1]+this.world.camera.y+spread3_y));
                 }
+                else if(wep instanceof SpikeTrap) {
+                    this.world.player.inventory.splice(this.world.player.active_index, 1);
+                    this.world.player.active_index = this.world.player.active_index - 1;
+                    this.world.placedTraps.push(new SpikeTrapPlaced(this.controller.mouse[0] + this.world.camera.x - 200, this.controller.mouse[1] + this.world.camera.y - 200));
+                }
+                else if(wep instanceof TarTrap) {
+                    this.world.player.inventory.splice(this.world.player.active_index, 1);
+                    this.world.player.active_index = this.world.player.active_index - 1;
+                    this.world.placedTraps.push(new TarTrapPlaced(this.controller.mouse[0] + this.world.camera.x - 200, this.controller.mouse[1] + this.world.camera.y - 200));
+                }
             }
         }
     }
@@ -597,6 +618,14 @@ class Game {
         if (this.controller.isKeyPressed(53)) { // Player pressed 5
             if(this.world.player.inventory.length > 4)
                 this.world.player.active_index = 4;
+        }
+        if (this.controller.isKeyPressed(54)) { // Player pressed 6
+            if(this.world.player.inventory.length > 5)
+                this.world.player.active_index = 5;
+        }
+        if (this.controller.isKeyPressed(55)) { // Player pressed 7
+            if(this.world.player.inventory.length > 6)
+                this.world.player.active_index = 6;
         }
     }
 

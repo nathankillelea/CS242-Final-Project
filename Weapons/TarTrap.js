@@ -11,6 +11,7 @@ class TarTrap extends Weapon {
     constructor() {
         super(0, 0, 0);
         this.name = 'Tar Trap';
+        super.loadShootSound('Audio/TarTrap.mp3');
     }
 }
 

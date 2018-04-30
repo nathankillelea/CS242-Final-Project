@@ -5,6 +5,8 @@
  */
 
 import Util from '../Utilities/Util.js';
+import SpikeTrapPlaced from '../PlacedTraps/SpikeTrapPlaced';
+import TarTrapPlaced from '../PlacedTraps/TarTrapPlaced'
 
 /**
  * The Enemy class is the parent class for all of the enemies.
@@ -29,6 +31,8 @@ class Enemy {
         this.damage = damage;
         this.pointsOnKill = pointsOnKill;
         this.attackCooldown = 0;
+        this.isSlowed = false;
+        this.attackDamageTakenCooldown = 0;
     }
 
     /**
@@ -62,8 +66,10 @@ class Enemy {
      * @param player The player object to move towards.
      * @param modifier The modifier to be multiplied by the velocity.
      * @param environmentObjects An array of environment objects.
+     * @param placedTraps An array of placed traps.
+     * @param camera The camera object.
      */
-    move(player, modifier, environmentObjects, camera) {
+    move(player, modifier, environmentObjects, placedTraps, camera) {
         let diffX = player.x - this.x;
         let diffY = player.y - this.y;
 
@@ -83,8 +89,18 @@ class Enemy {
 
         let oldX = this.x;
         let oldY = this.y;
-        this.x += this.velocity*modifier*coeffX;
-        this.y += this.velocity*modifier*coeffY;
+
+        this.attackDamageTakenCooldown -= modifier;
+        this.isCollisionWithPlacedTraps(placedTraps);
+
+        if(this.isSlowed) {
+            this.x += this.velocity/2*modifier*coeffX;
+            this.y += this.velocity/2*modifier*coeffY;
+        }
+        else {
+            this.x += this.velocity*modifier*coeffX;
+            this.y += this.velocity*modifier*coeffY;
+        }
 
         if((this.x + this.width > 10000) || (this.x < 0) || (this.y + this.height > 5625) || (this.y < 0) || this.isCollisionWithEnvironmentObject(environmentObjects))  {
             this.x = oldX;
@@ -125,6 +141,27 @@ class Enemy {
             }
         }
         return false;
+    }
+
+    /**
+     * This function checks if the enemy is colliding with a trap. If they are colliding with a spike trap, they take
+     * 5 damage every 5 seconds. If they are colliding with a tar trap, the isSlowed flag is set to true and their
+     * movement is cut in half.
+     * @param placedTraps
+     */
+    isCollisionWithPlacedTraps(placedTraps) {
+        if(this.attackDamageTakenCooldown < 0)
+            this.attackDamageTakenCooldown = 0;
+        for(let i = 0; i < placedTraps.length; i++) {
+            if(Util.isCollision(this, placedTraps[i])) {
+                if(placedTraps[i] instanceof SpikeTrapPlaced && this.attackDamageTakenCooldown === 0) {
+                    this.health -= 5;
+                    this.attackDamageTakenCooldown += 5;
+                }
+                else if(placedTraps[i] instanceof TarTrapPlaced)
+                    this.isSlowed = true;
+            }
+        }
     }
 
     /**
