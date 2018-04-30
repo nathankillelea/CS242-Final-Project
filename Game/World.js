@@ -12,10 +12,12 @@ import Camera from "../Players/Camera";
 import GroundAssaultRifle from "../PickUps/GroundAssaultRifle.js";
 import GroundSniper from "../PickUps/GroundSniper.js";
 import GroundShotgun from '../PickUps/GroundShotgun.js';
-import GroundFlamethrower from '../PickUps/GroundFlamethrower.js';
 import HealthPack from "../PickUps/Healthpack.js";
 import Util from "../Utilities/Util";
 import ParasiteEnemy from "../Enemies/ParasiteEnemy";
+import GroundSpikeTrap from "../PickUps/GroundSpikeTrap.js";
+import GroundTarTrap from '../PickUps/GroundTarTrap.js';
+import GroundFlamethrower from "../PickUps/GroundFlamethrower";
 
 /**
  * The World class holds the information related to the world.
@@ -84,8 +86,10 @@ class World {
          let sniperCap = 3;
          let assaultRifleCap = 5;
          let shotgunCap = 5;
-         let flamethrowerCap = 5;
          let healthPackCap = 7;
+         let spikeTrapCap = 5;
+         let tarTrapCap = 5;
+         let flamethrowerCap = 5;
 
          for(let i = 0; i < sniperCap; i++)
              this.groundWeapons.push(new GroundSniper(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
@@ -93,10 +97,14 @@ class World {
              this.groundWeapons.push(new GroundAssaultRifle(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
          for(let i = 0; i < shotgunCap; i++)
              this.groundWeapons.push(new GroundShotgun(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
-        for(let i = 0; i < flamethrowerCap; i++)
-              this.groundWeapons.push(new GroundFlamethrower(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
          for(let i = 0; i < healthPackCap; i++)
              this.pickUps.push(new HealthPack(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < spikeTrapCap; i++)
+            this.pickUps.push(new GroundSpikeTrap(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < tarTrapCap; i++)
+            this.pickUps.push(new GroundTarTrap(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
+        for(let i = 0; i < flamethrowerCap; i++)
+            this.pickUps.push(new GroundFlamethrower(Util.randomIntFromInterval(250, 9750), Util.randomIntFromInterval(250, 5375)));
 
          let selfCollisionFlag = true;
          while(selfCollisionFlag) {
