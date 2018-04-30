@@ -1,19 +1,16 @@
-import Trap from './Trap.js';
+import Weapon from './Weapon.js';
 
 /**
  * The SpikeTrap class extends the Trap class.
  */
-class SpikeTrap extends Trap {
+class SpikeTrap extends Weapon {
 
     /**
-     * The constructor initializes the fields of the SpikeTrap. A call is made to the Trap classes constructor
-     * with the inputted x and y.
-     * @param x The x position of the Trap.
-     * @param y The y position of the Trap.
+     * The constructor initializes the fields of the SpikeTrap. A call is made to the Weapon classes constructor.
      */
-    constructor(x, y) {
-        super(x, y);
-        super.loadImage("Graphics/SpikeTrap.png");
+    constructor() {
+        super(0, 0, 0);
+        this.name = 'Spike Trap';
     }
 }
 
