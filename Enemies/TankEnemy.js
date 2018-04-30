@@ -15,6 +15,7 @@ class TankEnemy extends Enemy {
     constructor(x, y) {
         super(x, y, 32, 100,  25, 500);
         super.loadImage("Graphics/TankEnemy.png");
+        super.loadDamageTakenSound('Audio/TankEnemyDamageTaken.mp3');
     }
 }
 

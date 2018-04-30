@@ -50,6 +50,15 @@ class Enemy {
         };
         this.image.src = url;
     }
+    
+    loadDamageTakenSound(url) {
+        this.isSound1Loaded = false;
+        this.damageTakenSound = new Audio();
+        this.damageTakenSound.onload = () => {
+            this.isSound1Loaded = true;
+        };
+        this.damageTakenSound.src = url;
+    }
 
     /**
      * The attack function takes in an object and removes the amount of damage the Enemy deals from their health.

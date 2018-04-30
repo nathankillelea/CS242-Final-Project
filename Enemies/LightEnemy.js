@@ -15,6 +15,7 @@ class LightEnemy extends Enemy {
     constructor(x, y) {
         super(x, y, 128, 10, 10, 50);
         super.loadImage("Graphics/LightEnemy.png");
+        super.loadDamageTakenSound('Audio/LightEnemyDamageTaken.mp3');
     }
 }
 

@@ -1,7 +1,7 @@
 import Weapon from './Weapon.js';
 
 /**
- * The SpikeTrap class extends the Weapon class.
+ * The SpikeTrap class extends the Trap class.
  */
 class SpikeTrap extends Weapon {
 

@@ -30,6 +30,7 @@ class FinalBoss extends Enemy {
         this.chargeAttackLengthReset = 100;
         this.isChargeAttack = false;
         super.loadImage("Graphics/FinalBoss.png");
+        super.loadDamageTakenSound('Audio/FinalBossDamageTaken.mp3');
     }
 
     /**

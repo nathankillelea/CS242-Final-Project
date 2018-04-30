@@ -18,6 +18,7 @@ class MiniBoss extends Enemy {
         this.shootCooldownRate = 1;
         this.shootCooldownReset = 200;
         super.loadImage("Graphics/MiniBoss.png");
+        super.loadDamageTakenSound('Audio/MiniBossDamageTaken.mp3');
     }
 }
 

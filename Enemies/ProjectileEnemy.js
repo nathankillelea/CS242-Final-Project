@@ -19,6 +19,7 @@ class ProjectileEnemy extends Enemy {
         this.shootCooldownReset = 300;
         this.shootAmount = 1;
         super.loadImage("Graphics/ProjectileEnemy.png");
+        super.loadDamageTakenSound('Audio/ProjectileEnemyDamageTaken.mp3');
     }
 }
 

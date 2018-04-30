@@ -15,6 +15,7 @@ class RegularEnemy extends Enemy {
     constructor(x, y) {
         super(x, y, 64, 25, 10, 100);
         super.loadImage("Graphics/RegularEnemy.png");
+        super.loadDamageTakenSound('Audio/RegularEnemyDamageTaken.mp3');
     }
 }
 

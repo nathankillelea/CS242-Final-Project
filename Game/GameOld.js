@@ -15,11 +15,11 @@ import Bullet556 from "../Weapons/Bullet556";
 import Bullet12Gauge from "../Weapons/Bullet12Gauge";
 import Bullet9mm from "../Weapons/Bullet9mm";
 import BulletFire from "../Weapons/BulletFire";
-import Util from '../Utilities/Util.js';
 import SpikeTrap from "../Weapons/SpikeTrap";
 import TarTrap from "../Weapons/TarTrap";
 import SpikeTrapPlaced from "../PlacedTraps/SpikeTrapPlaced";
 import TarTrapPlaced from "../PlacedTraps/TarTrapPlaced";
+import Util from '../Utilities/Util.js';
 
 /**
  * The Game class is used to store the game state. It also allows for the game to be updated or drawn.
@@ -107,7 +107,6 @@ class Game {
 
             this.drawWeapons();
             this.drawPickUps();
-            this.drawPlacedTraps();
 
             if(this.world.player.isImageLoaded)
                 this.world.player.draw(this.ctx, this.world.camera, this.controller.mouse);
@@ -238,9 +237,6 @@ class Game {
         this.ctx.fillText("Try again?", this.canvas.width/2 - 100 + 100, this.canvas.height/2 + 25 + 50);
     }
 
-    /**
-     * This function updates the top scores based on the current score.
-     */
     updateTopScores() {
         if(this.score > this.topScores[0]) {
             this.topScores[2] = this.topScores[1];
@@ -330,7 +326,7 @@ class Game {
      */
     updateEnemies(modifier) {
         for(let i = this.world.enemies.length - 1; i >= 0; i--) {
-            this.world.enemies[i].move(this.world.player, modifier, this.world.environmentObjects, this.world.placedTraps, this.world.camera);
+            this.world.enemies[i].move(this.world.player, modifier, this.world.environmentObjects, this.world.camera);
             if(this.world.enemies[i].attackCooldown > 0)
                 this.world.enemies[i].attackCooldown -= 5;
             if(this.world.enemies[i] instanceof FinalBoss) {
@@ -546,7 +542,6 @@ class Game {
      * This function adds new bullets to the world depending on if the player pressed their mouse button and what weapon
      * was equipped. It checks the type of weapon the player has equipped and fires the correct bullets. Shotgun is unique
      * in that it fires 5 bullets with a spread which is done by adding/subtracting a constant from the destination.
-     * If a trap is currently equipped, it is placed at the mouse position and removed from the player's inventory.
      */
     updateShot() {
         if(this.controller.isMousePressed()) {
