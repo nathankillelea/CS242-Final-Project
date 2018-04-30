@@ -9,7 +9,10 @@ class Player {
   //this.y = y position
   //this.health = player's life
   //this.speed = player's movespeed
+  //this.inventory = array to hold weapon objects, player starts with a pistol.
   //this.loadImage() is a function to attach the image to the player.
+  //this.stamina = how many seconds the user can sprint. increases when resting and decreases when sprintnig
+  //this.resting = boolean to tell the movement function whether or not the player is allowed to sprint
   //The player has an array to hold his items and he will start with a pistol and sniper this week for easy testing
   //Next week items will be picked up by walking over them and as such there will need to be an addItem function
   constructor(x, y) {
@@ -56,7 +59,11 @@ class Player {
       };
       this.damageTakenSound.src = url;
   }
-
+    //Save the original canvas settings.
+    //Translate canvas top left corner to be the center of the player's position so that rotation is done about the center.
+    //Calculate the angle of rotation with trig using the cursor and user positions.
+    //Rotate the canvas and draw the image slightly offset so that the center aligns with the corner of the canvas.
+    //Restore the original canvas settings.
     draw(ctx, camera, mouse) {
         ctx.save();
         ctx.translate((this.x+this.width/2) - camera.x, (this.y+this.height/2) - camera.y);
