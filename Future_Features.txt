@@ -1,6 +1,0 @@
-1. Improved hit detection
-2. Improve visuals
-3. Rotate player towards cursor, enemies towards player
-4. Improved enemy pathing/AI
-5. More enemies
-6. More Sound effects
